@@ -1,6 +1,6 @@
-package org.jetbrains.plugins.template.services
+package com.github.oovm.swarmintellij.services
 
-import org.jetbrains.plugins.template.MyBundle
+import com.github.oovm.swarmintellij.MyBundle
 
 class MyApplicationService {
 
