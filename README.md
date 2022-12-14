@@ -1,4 +1,4 @@
-# Yggdrasil Intellij
+# Swarm Intellij
 
 
 ![Build](https://github.com/voml/voml-intellij/workflows/Build/badge.svg)
@@ -7,7 +7,7 @@
 
 <!-- Plugin description -->
 
-Intellij plugin for [Yggdrasil](https://github.com/ygg-lang/project-yggdrasil), support all IDEs.
+Intellij plugin for [Swarm](https://github.com/swarm-lang/project-Swarm), support all IDEs.
 
 ## Features
 - [Syntax Highlight]()
