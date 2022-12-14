@@ -23,11 +23,23 @@ public class SwarmVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitCommentDoc(@NotNull SwarmCommentDoc o) {
+  public void visitCmdBlock(@NotNull SwarmCmdBlock o) {
     visitPsiElement(o);
   }
 
-  public void visitDefineBody(@NotNull SwarmDefineBody o) {
+  public void visitCmdPair(@NotNull SwarmCmdPair o) {
+    visitPsiElement(o);
+  }
+
+  public void visitCmdString(@NotNull SwarmCmdString o) {
+    visitPsiElement(o);
+  }
+
+  public void visitCmdValue(@NotNull SwarmCmdValue o) {
+    visitPsiElement(o);
+  }
+
+  public void visitCommentDoc(@NotNull SwarmCommentDoc o) {
     visitPsiElement(o);
   }
 

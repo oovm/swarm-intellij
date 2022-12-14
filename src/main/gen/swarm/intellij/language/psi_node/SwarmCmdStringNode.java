@@ -8,41 +8,23 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import static swarm.intellij.language.psi.SwarmTypes.*;
-import swarm.intellij.language.mixin.MixinDefineStatement;
+import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import swarm.intellij.language.psi.*;
 
-public class SwarmDefineStatementNode extends MixinDefineStatement implements SwarmDefineStatement {
+public class SwarmCmdStringNode extends ASTWrapperPsiElement implements SwarmCmdString {
 
-  public SwarmDefineStatementNode(@NotNull ASTNode node) {
+  public SwarmCmdStringNode(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull SwarmVisitor visitor) {
-    visitor.visitDefineStatement(this);
+    visitor.visitCmdString(this);
   }
 
   @Override
   public void accept(@NotNull PsiElementVisitor visitor) {
     if (visitor instanceof SwarmVisitor) accept((SwarmVisitor)visitor);
     else super.accept(visitor);
-  }
-
-  @Override
-  @Nullable
-  public SwarmCmdBlock getCmdBlock() {
-    return findChildByClass(SwarmCmdBlock.class);
-  }
-
-  @Override
-  @Nullable
-  public SwarmDefineParameters getDefineParameters() {
-    return findChildByClass(SwarmDefineParameters.class);
-  }
-
-  @Override
-  @NotNull
-  public SwarmModifiers getModifiers() {
-    return findNotNullChildByClass(SwarmModifiers.class);
   }
 
   @Override

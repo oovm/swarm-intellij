@@ -5,16 +5,10 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface SwarmDefineStatement extends PsiElement {
-
-  @Nullable
-  SwarmCmdBlock getCmdBlock();
-
-  @Nullable
-  SwarmDefineParameters getDefineParameters();
+public interface SwarmCmdPair extends PsiElement {
 
   @NotNull
-  SwarmModifiers getModifiers();
+  SwarmCmdValue getCmdValue();
 
   @NotNull
   SwarmNamespace getNamespace();

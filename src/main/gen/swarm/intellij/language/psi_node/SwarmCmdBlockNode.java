@@ -8,17 +8,17 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import static swarm.intellij.language.psi.SwarmTypes.*;
-import swarm.intellij.language.mixin.MixinDefineStatement;
+import swarm.intellij.language.mixin.MixinRuleBody;
 import swarm.intellij.language.psi.*;
 
-public class SwarmDefineStatementNode extends MixinDefineStatement implements SwarmDefineStatement {
+public class SwarmCmdBlockNode extends MixinRuleBody implements SwarmCmdBlock {
 
-  public SwarmDefineStatementNode(@NotNull ASTNode node) {
+  public SwarmCmdBlockNode(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull SwarmVisitor visitor) {
-    visitor.visitDefineStatement(this);
+    visitor.visitCmdBlock(this);
   }
 
   @Override
@@ -28,27 +28,15 @@ public class SwarmDefineStatementNode extends MixinDefineStatement implements Sw
   }
 
   @Override
-  @Nullable
-  public SwarmCmdBlock getCmdBlock() {
-    return findChildByClass(SwarmCmdBlock.class);
-  }
-
-  @Override
-  @Nullable
-  public SwarmDefineParameters getDefineParameters() {
-    return findChildByClass(SwarmDefineParameters.class);
+  @NotNull
+  public List<SwarmCmdPair> getCmdPairList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, SwarmCmdPair.class);
   }
 
   @Override
   @NotNull
-  public SwarmModifiers getModifiers() {
-    return findNotNullChildByClass(SwarmModifiers.class);
-  }
-
-  @Override
-  @NotNull
-  public SwarmNamespace getNamespace() {
-    return findNotNullChildByClass(SwarmNamespace.class);
+  public List<SwarmCmdString> getCmdStringList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, SwarmCmdString.class);
   }
 
 }

@@ -17,7 +17,7 @@ def maven {
 def jdk(key: Secret = "abc") {
     steps {
         cargo.run: a
-        cargo (
+        cargo(
             workspace a
 
         )
@@ -25,12 +25,12 @@ def jdk(key: Secret = "abc") {
         run: java -version -k ${key}
         retry(3) {
             timeout(10s) {
-                print "hello"
+                print "Retry 3 times, each time to complete within 10s"
             }
         }
         timeout(10s) {
             retry(3) {
-                print "hello"
+                print "Retry 3 times, complete within 10 seconds"
             }
         }
         if clean {

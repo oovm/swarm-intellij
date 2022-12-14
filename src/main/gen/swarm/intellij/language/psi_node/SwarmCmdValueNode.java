@@ -8,17 +8,17 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import static swarm.intellij.language.psi.SwarmTypes.*;
-import swarm.intellij.language.mixin.MixinDefineStatement;
+import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import swarm.intellij.language.psi.*;
 
-public class SwarmDefineStatementNode extends MixinDefineStatement implements SwarmDefineStatement {
+public class SwarmCmdValueNode extends ASTWrapperPsiElement implements SwarmCmdValue {
 
-  public SwarmDefineStatementNode(@NotNull ASTNode node) {
+  public SwarmCmdValueNode(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull SwarmVisitor visitor) {
-    visitor.visitDefineStatement(this);
+    visitor.visitCmdValue(this);
   }
 
   @Override
@@ -35,20 +35,14 @@ public class SwarmDefineStatementNode extends MixinDefineStatement implements Sw
 
   @Override
   @Nullable
-  public SwarmDefineParameters getDefineParameters() {
-    return findChildByClass(SwarmDefineParameters.class);
+  public SwarmNumberSuffix getNumberSuffix() {
+    return findChildByClass(SwarmNumberSuffix.class);
   }
 
   @Override
-  @NotNull
-  public SwarmModifiers getModifiers() {
-    return findNotNullChildByClass(SwarmModifiers.class);
-  }
-
-  @Override
-  @NotNull
-  public SwarmNamespace getNamespace() {
-    return findNotNullChildByClass(SwarmNamespace.class);
+  @Nullable
+  public SwarmStringLiteral getStringLiteral() {
+    return findChildByClass(SwarmStringLiteral.class);
   }
 
 }

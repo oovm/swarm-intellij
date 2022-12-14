@@ -92,15 +92,23 @@ union_statement ::= KW_UNION modifiers identifier [rule_type] rule_body {
     mixin = "swarm.intellij.language.mixin.MixinUnionStatement"
 };
 // =====================================================================================================================
-define_statement ::= KW_DEFINE modifiers namespace [define_parameters] define_body {
+define_statement ::= KW_DEFINE modifiers namespace [define_parameters] cmd_block {
     pin = namespace
     mixin = "swarm.intellij.language.mixin.MixinDefineStatement"
 };
 define_parameters ::= PARENTHESIS_L [define_pair (COMMA define_pair)* COMMA?] PARENTHESIS_R;
 define_pair       ::= identifier [COLON rule_type] [EQ expr];
-define_body       ::= BRACE_L [CHOOSE] [rule_expr] BRACE_R {
+// =====================================================================================================================
+cmd_block       ::= BRACE_L (cmd_statement|SEMICOLON|COMMA)* BRACE_R {
     mixin = "swarm.intellij.language.mixin.MixinRuleBody"
 }
+private cmd_statement ::=
+      cmd_pair
+    | cmd_string
+    ;
+cmd_pair   ::= namespace [EQ] cmd_value;
+cmd_string ::= namespace LINE_ARG;
+cmd_value  ::= BOOLEAN | num | string_literal | cmd_block;
 // =====================================================================================================================
 rule_expr ::= rule_term (infix rule_term | rule_term)*;
 rule_term ::= (prefix)* rule_atom (suffix| range)*
