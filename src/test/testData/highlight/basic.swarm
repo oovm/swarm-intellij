@@ -1,0 +1,46 @@
+namespace rust;
+
+/// rust.cargo.run
+def cargo.run() {
+
+}
+
+/// 
+def maven {
+    system "windows"
+    shell {
+        location "usr/"
+    }
+}
+
+
+def jdk(key: Secret = "abc") {
+    steps {
+        cargo.run: a
+        cargo (
+            workspace a
+
+        )
+        log.info: Hello, JDK
+        run: java -version -k ${key}
+        retry(3) {
+            timeout(10s) {
+                print "hello"
+            }
+        }
+        timeout(10s) {
+            retry(3) {
+                print "hello"
+            }
+        }
+        if clean {
+
+        }
+        else {
+            b
+        }
+    }
+    then {
+
+    }
+}
