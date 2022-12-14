@@ -5,13 +5,7 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface SwarmDefinePair extends PsiElement {
-
-  @Nullable
-  SwarmDefineType getDefineType();
-
-  @Nullable
-  SwarmExpr getExpr();
+public interface SwarmDefineType extends PsiElement {
 
   @NotNull
   SwarmIdentifier getIdentifier();

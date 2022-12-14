@@ -7,11 +7,11 @@ import swarm.intellij.language.psi.SwarmTypes
 
 private val prefix = TokenSet.create(SwarmTypes.AT, SwarmTypes.HASH)
 
-private val infix = TokenSet.create(SwarmTypes.SOFT_CONNECT, SwarmTypes.CHOOSE)
+private val infix = TokenSet.create(SwarmTypes.EQ)
 
 private val suffix = TokenSet.create(SwarmTypes.OPTIONAL, SwarmTypes.MANY, SwarmTypes.MANY1)
 
-private val declare = TokenSet.create(SwarmTypes.KW_CLASS, SwarmTypes.KW_DEFINE)
+private val declare = TokenSet.create(SwarmTypes.KW_TASK, SwarmTypes.KW_DEFINE)
 
 
 fun createSpacingBuilder(commonSettings: CommonCodeStyleSettings): SpacingBuilder {
@@ -23,8 +23,8 @@ fun createSpacingBuilder(commonSettings: CommonCodeStyleSettings): SpacingBuilde
 //        .aroundInside(SwarmTypes.IDENTIFIER, SwarmTypes.MODIFIERS).spacing(1, 1, 0, true, 0)
         // {1,2}
         .aroundInside(SwarmTypes.COMMA, SwarmTypes.RANGE).spaceIf(false)
-        .beforeInside(SwarmTypes.COMMA, SwarmTypes.DEFINE_PARAMETERS).spaceIf(false)
-        .afterInside(SwarmTypes.COMMA, SwarmTypes.DEFINE_PARAMETERS).spacing(1, 1, 0, true, 0)
+//        .beforeInside(SwarmTypes.COMMA, SwarmTypes.DEFINE_PARAMETERS).spaceIf(false)
+//        .afterInside(SwarmTypes.COMMA, SwarmTypes.DEFINE_PARAMETERS).spacing(1, 1, 0, true, 0)
         // [ ]
         .after(SwarmTypes.BRACKET_L).spaceIf(false)
         .before(SwarmTypes.BRACKET_R).spaceIf(false)
@@ -37,8 +37,9 @@ fun createSpacingBuilder(commonSettings: CommonCodeStyleSettings): SpacingBuilde
         .before(SwarmTypes.PARENTHESIS_R).spaceIf(false)
         // a:b
         .aroundInside(SwarmTypes.COLON, SwarmTypes.FIELD_MARK).spaceIf(false)
-        .afterInside(SwarmTypes.COLON, SwarmTypes.RULE_TYPE).spaceIf(true)
-        .beforeInside(SwarmTypes.ARROW, SwarmTypes.RULE_TYPE).spaceIf(true)
+//        .afterInside(SwarmTypes.COLON, SwarmTypes.RULE_TYPE).spaceIf(true)
+//        .beforeInside(SwarmTypes.ARROW, SwarmTypes.RULE_TYPE).spaceIf(true)
+        .around(infix).spaceIf(true)
 //        .before(SwarmTypes.RULE_TYPE).spaceIf(false)
         //
         .after(SwarmTypes.PREFIX).spaceIf(false)

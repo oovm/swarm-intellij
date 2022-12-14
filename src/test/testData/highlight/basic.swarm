@@ -6,7 +6,7 @@ def cargo.run() {
 }
 
 
-def maven {
+def maven() {
     system "windows"
     shell {
         location "usr/"
@@ -16,16 +16,16 @@ def maven {
 
 def jdk(key: Secret = "abc") {
     steps {
-        cargo.run "a"
+        cargo-run: "a"
         cargo(
-            workspace: "a"
-
+            workspace = "a"
         )
         @info Hello, JDK
         @run java -version -k ${key}
         retry(3) {
             timeout(10s) {
                 @print Retry 3 times, each time to complete within 10s
+                a = 2
             }
         }
         timeout(10s) {
@@ -33,14 +33,12 @@ def jdk(key: Secret = "abc") {
                 @print Retry 3 times, complete within 10 seconds
             }
         }
-        if clean != 2 {
-
-        }
-        else {
-            b
-        }
     }
     then {
 
     }
+}
+
+task a {
+    steps {}
 }

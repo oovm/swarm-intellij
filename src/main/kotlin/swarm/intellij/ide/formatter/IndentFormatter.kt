@@ -17,7 +17,12 @@ fun computeIndent(formatBlock: FormatBlock, child: ASTNode): Indent? {
             else -> Indent.getNormalIndent()
         }
 
-        SwarmTypes.RULE_BODY -> when {
+        SwarmTypes.CMD_BLOCK -> when {
+            isCornerChild -> Indent.getNoneIndent()
+            else -> Indent.getNormalIndent()
+        }
+
+        SwarmTypes.FUNCTION_ARGS -> when {
             isCornerChild -> Indent.getNoneIndent()
             else -> Indent.getNormalIndent()
         }

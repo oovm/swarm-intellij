@@ -27,11 +27,6 @@ class FoldingVisitor(private val descriptors: MutableList<FoldingDescriptor>) : 
     }
 
 
-    override fun visitRuleBody(o: SwarmRuleBody) {
-        foldInner(o)
-    }
-
-
     private fun fold(element: PsiElement) {
         descriptors += FoldingDescriptor(element.node, element.textRange)
     }

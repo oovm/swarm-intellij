@@ -15,10 +15,6 @@ public class SwarmVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitClassStatement(@NotNull SwarmClassStatement o) {
-    visitPsiElement(o);
-  }
-
   public void visitCmdBlock(@NotNull SwarmCmdBlock o) {
     visitPsiElement(o);
   }
@@ -43,15 +39,19 @@ public class SwarmVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitDefParameters(@NotNull SwarmDefParameters o) {
+    visitPsiElement(o);
+  }
+
   public void visitDefinePair(@NotNull SwarmDefinePair o) {
     visitPsiElement(o);
   }
 
-  public void visitDefineParameters(@NotNull SwarmDefineParameters o) {
+  public void visitDefineStatement(@NotNull SwarmDefineStatement o) {
     visitPsiElement(o);
   }
 
-  public void visitDefineStatement(@NotNull SwarmDefineStatement o) {
+  public void visitDefineType(@NotNull SwarmDefineType o) {
     visitPsiElement(o);
   }
 
@@ -159,19 +159,11 @@ public class SwarmVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitRuleBody(@NotNull SwarmRuleBody o) {
-    visitPsiElement(o);
-  }
-
   public void visitRuleExpr(@NotNull SwarmRuleExpr o) {
     visitPsiElement(o);
   }
 
   public void visitRuleTerm(@NotNull SwarmRuleTerm o) {
-    visitPsiElement(o);
-  }
-
-  public void visitRuleType(@NotNull SwarmRuleType o) {
     visitPsiElement(o);
   }
 
@@ -188,6 +180,10 @@ public class SwarmVisitor extends PsiElementVisitor {
   }
 
   public void visitTable(@NotNull SwarmTable o) {
+    visitPsiElement(o);
+  }
+
+  public void visitTaskStatement(@NotNull SwarmTaskStatement o) {
     visitPsiElement(o);
   }
 

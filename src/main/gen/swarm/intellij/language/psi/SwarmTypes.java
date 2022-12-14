@@ -10,15 +10,15 @@ public interface SwarmTypes {
 
   IElementType ATOM = new SwarmElementType("ATOM");
   IElementType CHARSET = new SwarmElementType("CHARSET");
-  IElementType CLASS_STATEMENT = new SwarmElementType("CLASS_STATEMENT");
   IElementType CMD_BLOCK = new SwarmElementType("CMD_BLOCK");
   IElementType CMD_PAIR = new SwarmElementType("CMD_PAIR");
   IElementType CMD_STATEMENT = new SwarmElementType("CMD_STATEMENT");
   IElementType CMD_STRING = new SwarmElementType("CMD_STRING");
   IElementType CMD_VALUE = new SwarmElementType("CMD_VALUE");
   IElementType DEFINE_PAIR = new SwarmElementType("DEFINE_PAIR");
-  IElementType DEFINE_PARAMETERS = new SwarmElementType("DEFINE_PARAMETERS");
   IElementType DEFINE_STATEMENT = new SwarmElementType("DEFINE_STATEMENT");
+  IElementType DEFINE_TYPE = new SwarmElementType("DEFINE_TYPE");
+  IElementType DEF_PARAMETERS = new SwarmElementType("DEF_PARAMETERS");
   IElementType EXPR = new SwarmElementType("EXPR");
   IElementType FIELD_MARK = new SwarmElementType("FIELD_MARK");
   IElementType FIELD_RHS = new SwarmElementType("FIELD_RHS");
@@ -45,14 +45,13 @@ public interface SwarmTypes {
   IElementType PARENTHESIS = new SwarmElementType("PARENTHESIS");
   IElementType PREFIX = new SwarmElementType("PREFIX");
   IElementType RULE_ATOM = new SwarmElementType("RULE_ATOM");
-  IElementType RULE_BODY = new SwarmElementType("RULE_BODY");
   IElementType RULE_EXPR = new SwarmElementType("RULE_EXPR");
   IElementType RULE_TERM = new SwarmElementType("RULE_TERM");
-  IElementType RULE_TYPE = new SwarmElementType("RULE_TYPE");
   IElementType STRING_LITERAL = new SwarmElementType("STRING_LITERAL");
   IElementType SUFFIX = new SwarmElementType("SUFFIX");
   IElementType SYMBOL_PATH = new SwarmElementType("SYMBOL_PATH");
   IElementType TABLE = new SwarmElementType("TABLE");
+  IElementType TASK_STATEMENT = new SwarmElementType("TASK_STATEMENT");
   IElementType TERM = new SwarmElementType("TERM");
   IElementType TYPE_HINT = new SwarmElementType("TYPE_HINT");
   IElementType VALUE = new SwarmElementType("VALUE");
@@ -88,10 +87,10 @@ public interface SwarmTypes {
   IElementType HASH = new SwarmElementType("HASH");
   IElementType HYPHEN = new SwarmElementType("-");
   IElementType INTEGER = new SwarmElementType("INTEGER");
-  IElementType KW_CLASS = new SwarmElementType("KW_CLASS");
   IElementType KW_DEFINE = new SwarmElementType("KW_DEFINE");
   IElementType KW_IMPORT = new SwarmElementType("KW_IMPORT");
   IElementType KW_NAMESPACE = new SwarmElementType("KW_NAMESPACE");
+  IElementType KW_TASK = new SwarmElementType("KW_TASK");
   IElementType LINE_ARG = new SwarmElementType("LINE_ARG");
   IElementType MANY = new SwarmElementType("*");
   IElementType MANY1 = new SwarmElementType("+");
@@ -120,9 +119,6 @@ public interface SwarmTypes {
       else if (type == CHARSET) {
         return new SwarmCharsetNode(node);
       }
-      else if (type == CLASS_STATEMENT) {
-        return new SwarmClassStatementNode(node);
-      }
       else if (type == CMD_BLOCK) {
         return new SwarmCmdBlockNode(node);
       }
@@ -141,11 +137,14 @@ public interface SwarmTypes {
       else if (type == DEFINE_PAIR) {
         return new SwarmDefinePairNode(node);
       }
-      else if (type == DEFINE_PARAMETERS) {
-        return new SwarmDefineParametersNode(node);
-      }
       else if (type == DEFINE_STATEMENT) {
         return new SwarmDefineStatementNode(node);
+      }
+      else if (type == DEFINE_TYPE) {
+        return new SwarmDefineTypeNode(node);
+      }
+      else if (type == DEF_PARAMETERS) {
+        return new SwarmDefParametersNode(node);
       }
       else if (type == EXPR) {
         return new SwarmExprNode(node);
@@ -225,17 +224,11 @@ public interface SwarmTypes {
       else if (type == RULE_ATOM) {
         return new SwarmRuleAtomNode(node);
       }
-      else if (type == RULE_BODY) {
-        return new SwarmRuleBodyNode(node);
-      }
       else if (type == RULE_EXPR) {
         return new SwarmRuleExprNode(node);
       }
       else if (type == RULE_TERM) {
         return new SwarmRuleTermNode(node);
-      }
-      else if (type == RULE_TYPE) {
-        return new SwarmRuleTypeNode(node);
       }
       else if (type == STRING_LITERAL) {
         return new SwarmStringLiteralNode(node);
@@ -248,6 +241,9 @@ public interface SwarmTypes {
       }
       else if (type == TABLE) {
         return new SwarmTableNode(node);
+      }
+      else if (type == TASK_STATEMENT) {
+        return new SwarmTaskStatementNode(node);
       }
       else if (type == TERM) {
         return new SwarmTermNode(node);

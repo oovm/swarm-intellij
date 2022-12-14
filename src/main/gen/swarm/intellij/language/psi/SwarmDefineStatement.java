@@ -11,7 +11,7 @@ public interface SwarmDefineStatement extends PsiElement {
   SwarmCmdBlock getCmdBlock();
 
   @Nullable
-  SwarmDefineParameters getDefineParameters();
+  SwarmDefParameters getDefParameters();
 
   @NotNull
   SwarmModifiers getModifiers();

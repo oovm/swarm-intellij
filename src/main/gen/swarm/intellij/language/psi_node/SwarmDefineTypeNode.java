@@ -11,32 +11,20 @@ import static swarm.intellij.language.psi.SwarmTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import swarm.intellij.language.psi.*;
 
-public class SwarmDefinePairNode extends ASTWrapperPsiElement implements SwarmDefinePair {
+public class SwarmDefineTypeNode extends ASTWrapperPsiElement implements SwarmDefineType {
 
-  public SwarmDefinePairNode(@NotNull ASTNode node) {
+  public SwarmDefineTypeNode(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull SwarmVisitor visitor) {
-    visitor.visitDefinePair(this);
+    visitor.visitDefineType(this);
   }
 
   @Override
   public void accept(@NotNull PsiElementVisitor visitor) {
     if (visitor instanceof SwarmVisitor) accept((SwarmVisitor)visitor);
     else super.accept(visitor);
-  }
-
-  @Override
-  @Nullable
-  public SwarmDefineType getDefineType() {
-    return findChildByClass(SwarmDefineType.class);
-  }
-
-  @Override
-  @Nullable
-  public SwarmExpr getExpr() {
-    return findChildByClass(SwarmExpr.class);
   }
 
   @Override

@@ -58,6 +58,7 @@ private comment ::= COMMENT_LINE | COMMENT_BLOCK | COMMENT_DOC;
 private statements ::=
       namespace_statement
     | import_statement
+    | task_statement
     | define_statement
     | macro_call
     | SEMICOLON;
@@ -76,21 +77,18 @@ import_body      ::= BRACE_L [identifier (COMMA identifier)* [COMMA]] BRACE_R;
 macro_arg ::= value;
 // =====================================================================================================================
 // def modifiers rule
-class_statement ::= KW_CLASS modifiers identifier [rule_type] rule_body {
-    pin = identifier
-    mixin = "swarm.intellij.language.mixin.MixinClassStatement"
+task_statement ::= KW_TASK modifiers namespace cmd_block {
+    pin = namespace
+    mixin = "swarm.intellij.language.mixin.MixinTaskStatement"
 };
-rule_body     ::= BRACE_L [CHOOSE] [rule_expr] BRACE_R {
-    mixin = "swarm.intellij.language.mixin.MixinRuleBody"
-}
-rule_type     ::= identifier;
 // =====================================================================================================================
-define_statement ::= KW_DEFINE modifiers namespace [define_parameters] cmd_block {
+define_statement ::= KW_DEFINE modifiers namespace def_parameters cmd_block {
     pin = namespace
     mixin = "swarm.intellij.language.mixin.MixinDefineStatement"
 };
-define_parameters ::= PARENTHESIS_L [define_pair (COMMA define_pair)* COMMA?] PARENTHESIS_R;
-define_pair       ::= identifier [COLON rule_type] [EQ expr];
+def_parameters   ::= PARENTHESIS_L [define_pair (COMMA define_pair)* COMMA?] PARENTHESIS_R;
+define_pair      ::= identifier [COLON define_type] [EQ expr];
+define_type      ::= identifier;
 // =====================================================================================================================
 cmd_block       ::= BRACE_L cmd_statement* BRACE_R {
     mixin = "swarm.intellij.language.mixin.MixinRuleBody"
@@ -158,7 +156,7 @@ object_item ::= object_key COLON value;
 object_key ::= identifier | string_literal;
 // ---------------------------------------------------------------------------------------------------------------------
 modifiers ::= (identifier !('('|'{'|ARROW|DOT|HYPHEN|COLON))*;
-namespace ::= identifier ((DOT|HYPHEN|DOUBLE_COLON) identifier)*
+namespace ::= identifier ((DOT|DOUBLE_COLON) identifier)*
 identifier ::= SYMBOL {
     mixin = "swarm.intellij.language.mixin.MixinIdentifier"
 }

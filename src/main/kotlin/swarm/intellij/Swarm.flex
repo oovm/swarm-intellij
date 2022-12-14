@@ -35,7 +35,7 @@ COMMENT_DOC=("///")[^\r\n]*
 COMMENT_LINE=("//")[^\r\n]*
 COMMENT_BLOCK=[/][*][^*]*[*]+([^/*][^*]*[*]+)*[/]
 BOOLEAN=true|false
-SYMBOL=[\p{XID_Start}_][\p{XID_Continue}_]*
+SYMBOL=[\p{XID_Start}_-][\p{XID_Continue}_-]*
 BYTE=(0[bBoOxXfF][0-9A-Fa-f][0-9A-Fa-f_]*)
 INTEGER=(0|[1-9][0-9_]*)
 DECIMAL=([0-9]+\.[0-9]*([*][*][0-9]+)?)|(\.[0-9]+([Ee][0-9]+)?)
@@ -46,9 +46,9 @@ ESCAPE_UNICODE = \\(x{HEX}{2}|u{HEX}{4}|U\{{HEX}+\})
 HEX = [0-9a-fA-F]
 
 KW_NAMESPACE = namespace|module|mod
-KW_CLASS     = class|struct|rule
-KW_DEFINE    = define|def|function|fun|fn|task
+KW_DEFINE    = define|def|function|fun|fn
 KW_IMPORT    = import|using|use
+KW_TASK      = task|pipeline
 
 %%
 <YYINITIAL> {
@@ -60,7 +60,7 @@ KW_IMPORT    = import|using|use
 
 <YYINITIAL> {
 	{KW_NAMESPACE} { return KW_NAMESPACE; }
-	{KW_CLASS}     { return KW_CLASS; }
+	{KW_TASK}      { return KW_TASK; }
 	{KW_DEFINE}    { return KW_DEFINE; }
 	{KW_IMPORT}    { return KW_IMPORT; }
     // {LINE_ARG}     { return LINE_ARG; }

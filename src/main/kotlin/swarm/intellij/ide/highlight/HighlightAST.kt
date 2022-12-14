@@ -29,10 +29,10 @@ class HighlightAST : SwarmVisitor(), HighlightVisitor {
         }
     }
 
-    override fun visitClassStatement(o: SwarmClassStatement) {
-        highlight(o.identifier, HighlightColor.SYM_CLASS)
-    }
 
+    override fun visitTaskStatement(o: SwarmTaskStatement) {
+        highlight(o.namespace, HighlightColor.SYM_CLASS)
+    }
 
 
     override fun visitDefineStatement(o: SwarmDefineStatement) {

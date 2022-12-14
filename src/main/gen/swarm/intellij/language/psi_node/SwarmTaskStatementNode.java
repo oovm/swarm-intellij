@@ -8,17 +8,17 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import static swarm.intellij.language.psi.SwarmTypes.*;
-import swarm.intellij.language.mixin.MixinDefineStatement;
+import swarm.intellij.language.mixin.MixinTaskStatement;
 import swarm.intellij.language.psi.*;
 
-public class SwarmDefineStatementNode extends MixinDefineStatement implements SwarmDefineStatement {
+public class SwarmTaskStatementNode extends MixinTaskStatement implements SwarmTaskStatement {
 
-  public SwarmDefineStatementNode(@NotNull ASTNode node) {
+  public SwarmTaskStatementNode(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull SwarmVisitor visitor) {
-    visitor.visitDefineStatement(this);
+    visitor.visitTaskStatement(this);
   }
 
   @Override
@@ -31,12 +31,6 @@ public class SwarmDefineStatementNode extends MixinDefineStatement implements Sw
   @Nullable
   public SwarmCmdBlock getCmdBlock() {
     return findChildByClass(SwarmCmdBlock.class);
-  }
-
-  @Override
-  @Nullable
-  public SwarmDefParameters getDefParameters() {
-    return findChildByClass(SwarmDefParameters.class);
   }
 
   @Override

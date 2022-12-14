@@ -5,7 +5,6 @@ import com.intellij.psi.PsiElement
 import swarm.intellij.language.file.SwarmIcon
 import swarm.intellij.language.psi_node.SwarmDefineStatementNode
 import swarm.intellij.language.psi_node.SwarmIdentifierNode
-import swarm.intellij.language.psi_node.SwarmRuleBodyNode
 
 open class MixinDefineStatement(node: ASTNode) : DeclareNode(node) {
     override fun getOriginalElement() = this as SwarmDefineStatementNode
@@ -22,17 +21,7 @@ open class MixinDefineStatement(node: ASTNode) : DeclareNode(node) {
         get() {
             val list = mutableListOf<SwarmIdentifierNode>();
             val names = mutableListOf<String>()
-            if (originalElement.defineParameters != null) {
-                for (pair in originalElement.defineParameters!!.definePairList) {
-                    list.add(pair.identifier as SwarmIdentifierNode)
-                    names.add(pair.identifier.text)
-                }
-            }
-//            for (node in (originalElement.ruleBody as SwarmRuleBodyNode).identifiers) {
-//                if (node.name in names) {
-//                    list.add(node)
-//                }
-//            }
+
             return list.toTypedArray()
         }
 }
