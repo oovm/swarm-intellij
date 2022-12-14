@@ -29,12 +29,6 @@ public class SwarmRuleAtomNode extends ASTWrapperPsiElement implements SwarmRule
 
   @Override
   @Nullable
-  public SwarmBranchMark getBranchMark() {
-    return findChildByClass(SwarmBranchMark.class);
-  }
-
-  @Override
-  @Nullable
   public SwarmCharset getCharset() {
     return findChildByClass(SwarmCharset.class);
   }

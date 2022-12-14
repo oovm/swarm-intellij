@@ -7,10 +7,7 @@ import com.intellij.psi.PsiElement;
 
 public interface SwarmMacroArg extends PsiElement {
 
-  @Nullable
-  SwarmMacroStatement getMacroStatement();
-
-  @Nullable
+  @NotNull
   SwarmValue getValue();
 
 }

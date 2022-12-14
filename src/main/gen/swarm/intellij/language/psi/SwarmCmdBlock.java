@@ -8,9 +8,6 @@ import com.intellij.psi.PsiElement;
 public interface SwarmCmdBlock extends PsiElement {
 
   @NotNull
-  List<SwarmCmdPair> getCmdPairList();
-
-  @NotNull
-  List<SwarmCmdString> getCmdStringList();
+  List<SwarmCmdStatement> getCmdStatementList();
 
 }

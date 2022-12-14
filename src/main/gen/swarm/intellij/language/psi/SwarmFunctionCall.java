@@ -7,10 +7,13 @@ import com.intellij.psi.PsiElement;
 
 public interface SwarmFunctionCall extends PsiElement {
 
-  @NotNull
-  SwarmIdentifier getIdentifier();
+  @Nullable
+  SwarmCmdBlock getCmdBlock();
 
   @NotNull
-  SwarmParenthesis getParenthesis();
+  SwarmFunctionArgs getFunctionArgs();
+
+  @NotNull
+  SwarmIdentifier getIdentifier();
 
 }

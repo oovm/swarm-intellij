@@ -11,14 +11,14 @@ import static swarm.intellij.language.psi.SwarmTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import swarm.intellij.language.psi.*;
 
-public class SwarmRangeStartNode extends ASTWrapperPsiElement implements SwarmRangeStart {
+public class SwarmFnPairNode extends ASTWrapperPsiElement implements SwarmFnPair {
 
-  public SwarmRangeStartNode(@NotNull ASTNode node) {
+  public SwarmFnPairNode(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull SwarmVisitor visitor) {
-    visitor.visitRangeStart(this);
+    visitor.visitFnPair(this);
   }
 
   @Override
@@ -28,9 +28,15 @@ public class SwarmRangeStartNode extends ASTWrapperPsiElement implements SwarmRa
   }
 
   @Override
+  @NotNull
+  public SwarmCmdValue getCmdValue() {
+    return findNotNullChildByClass(SwarmCmdValue.class);
+  }
+
+  @Override
   @Nullable
-  public SwarmNumberSuffix getNumberSuffix() {
-    return findChildByClass(SwarmNumberSuffix.class);
+  public SwarmKey getKey() {
+    return findChildByClass(SwarmKey.class);
   }
 
 }

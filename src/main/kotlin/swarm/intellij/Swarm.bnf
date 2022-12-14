@@ -59,7 +59,7 @@ private statements ::=
       namespace_statement
     | import_statement
     | define_statement
-    | macro_statement
+    | macro_call
     | SEMICOLON;
 // ---------------------------------------------------------------------------------------------------------------------
 // @grammar swarm {"*.yg","*.swarm", "*.grammar"}
@@ -73,9 +73,7 @@ import_statement ::= KW_IMPORT string_literal [import_body] {
 }
 import_body      ::= BRACE_L [identifier (COMMA identifier)* [COMMA]] BRACE_R;
 // ---------------------------------------------------------------------------------------------------------------------
-// @macro("path")
-macro_statement ::= AT SYMBOL <<parenthesis macro_arg COMMA>>;
-macro_arg ::= value | macro_statement;
+macro_arg ::= value;
 // =====================================================================================================================
 // def modifiers rule
 class_statement ::= KW_CLASS modifiers identifier [rule_type] rule_body {
@@ -85,12 +83,7 @@ class_statement ::= KW_CLASS modifiers identifier [rule_type] rule_body {
 rule_body     ::= BRACE_L [CHOOSE] [rule_expr] BRACE_R {
     mixin = "swarm.intellij.language.mixin.MixinRuleBody"
 }
-rule_type     ::= (COLON | ARROW) identifier;
-// =====================================================================================================================
-union_statement ::= KW_UNION modifiers identifier [rule_type] rule_body {
-    pin = identifier
-    mixin = "swarm.intellij.language.mixin.MixinUnionStatement"
-};
+rule_type     ::= identifier;
 // =====================================================================================================================
 define_statement ::= KW_DEFINE modifiers namespace [define_parameters] cmd_block {
     pin = namespace
@@ -99,16 +92,32 @@ define_statement ::= KW_DEFINE modifiers namespace [define_parameters] cmd_block
 define_parameters ::= PARENTHESIS_L [define_pair (COMMA define_pair)* COMMA?] PARENTHESIS_R;
 define_pair       ::= identifier [COLON rule_type] [EQ expr];
 // =====================================================================================================================
-cmd_block       ::= BRACE_L (cmd_statement|SEMICOLON|COMMA)* BRACE_R {
+cmd_block       ::= BRACE_L cmd_statement* BRACE_R {
     mixin = "swarm.intellij.language.mixin.MixinRuleBody"
 }
-private cmd_statement ::=
+cmd_statement ::=
       cmd_pair
     | cmd_string
+    | function_call
+    | SEMICOLON
+    | COMMA
     ;
-cmd_pair   ::= namespace [EQ] cmd_value;
+cmd_pair   ::= namespace [EQ|COLON] cmd_value;
 cmd_string ::= namespace LINE_ARG;
 cmd_value  ::= BOOLEAN | num | string_literal | cmd_block;
+// ---------------------------------------------------------------------------------------------------------------------
+// @function("path")
+function_call ::= identifier function_args [cmd_block];
+function_args ::= PARENTHESIS_L fn_statement* PARENTHESIS_R;
+fn_statement  ::= fn_pair;
+fn_pair   ::= [key (EQ|COLON)] cmd_value;
+
+
+expr ::= term (infix term | term)*;
+term ::= (prefix)* atom (suffix)*
+atom ::= PARENTHESIS_L [CHOOSE] expr PARENTHESIS_R | field_mark | function_call | value;
+// =====================================================================================================================
+macro_call  ::= HASH identifier;
 // =====================================================================================================================
 rule_expr ::= rule_term (infix rule_term | rule_term)*;
 rule_term ::= (prefix)* rule_atom (suffix| range)*
@@ -118,22 +127,10 @@ rule_atom ::=
 infix ::= CHOOSE | SOFT_CONNECT;
 prefix ::= ACCENT;
 suffix ::= OPTIONAL | MANY | MANY1;
-// =====================================================================================================================
-range ::= '{' range_start? ','? range_end? '}';
-range_start ::= num;
-range_end ::= num;
 // ---------------------------------------------------------------------------------------------------------------------
-branch_mark ::= HASH identifier;
 field_mark ::= identifier COLON field_rhs;
 field_rhs  ::= identifier | charset | string_literal;
 // ---------------------------------------------------------------------------------------------------------------------
-// @function("path")
-function_call ::= AT identifier <<parenthesis expr COMMA>>;
-expr ::= term (infix term | term)*;
-term ::= (prefix)* atom (suffix)*
-atom ::= PARENTHESIS_L [CHOOSE] expr PARENTHESIS_R | field_mark | function_call | value;
-// ---------------------------------------------------------------------------------------------------------------------
-macro_call  ::= HASH identifier;
 // ---------------------------------------------------------------------------------------------------------------------
 value ::= BOOLEAN | num | string_literal | table | namespace | charset;
 type_hint ::= identifier;
@@ -148,7 +145,7 @@ key_symbol ::= SYMBOL;
 // ---------------------------------------------------------------------------------------------------------------------
 private num ::= [SIGN] (INTEGER | DECIMAL) [number_suffix] | [SIGN] BYTE;
 // ---------------------------------------------------------------------------------------------------------------------
-string_literal ::= esc | STRING_SQ char* STRING_SQ | STRING_DQ char* STRING_DQ;
+string_literal ::= esc | STRING_SQ char* STRING_SQ | STRING_DQ char* STRING_DQ | char+;
 private char ::= CHARACTER | esc;
 private esc ::= ESCAPE_UNICODE | ESCAPE_SPECIAL;
 // ---------------------------------------------------------------------------------------------------------------------

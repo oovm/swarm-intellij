@@ -24,6 +24,7 @@ public _SwarmLexer() {
 
 %state StringSQ
 %state StringDQ
+%state StringRL
 %state Regex
 %state RegexRange
 
@@ -32,7 +33,6 @@ WHITE_SPACE=\s+
 
 COMMENT_DOC=("///")[^\r\n]*
 COMMENT_LINE=("//")[^\r\n]*
-LINE_ARG = :\s*[^\r\n]*
 COMMENT_BLOCK=[/][*][^*]*[*]+([^/*][^*]*[*]+)*[/]
 BOOLEAN=true|false
 SYMBOL=[\p{XID_Start}_][\p{XID_Continue}_]*
@@ -47,7 +47,6 @@ HEX = [0-9a-fA-F]
 
 KW_NAMESPACE = namespace|module|mod
 KW_CLASS     = class|struct|rule
-KW_UNION     = union|enum
 KW_DEFINE    = define|def|function|fun|fn|task
 KW_IMPORT    = import|using|use
 
@@ -62,10 +61,9 @@ KW_IMPORT    = import|using|use
 <YYINITIAL> {
 	{KW_NAMESPACE} { return KW_NAMESPACE; }
 	{KW_CLASS}     { return KW_CLASS; }
-	{KW_UNION}     { return KW_UNION; }
 	{KW_DEFINE}    { return KW_DEFINE; }
 	{KW_IMPORT}    { return KW_IMPORT; }
-    {LINE_ARG}     { return LINE_ARG; }
+    // {LINE_ARG}     { return LINE_ARG; }
 }
 
 <YYINITIAL> {
@@ -84,7 +82,6 @@ KW_IMPORT    = import|using|use
 	:    { return COLON; }
 	;    { return SEMICOLON; }
 	,    { return COMMA; }
-	@    { return AT; }
 	#    { return HASH; }
 	\^   { return ACCENT; }
 	\~   { return SOFT_CONNECT;}
@@ -116,12 +113,17 @@ KW_IMPORT    = import|using|use
 <YYINITIAL> {
 	\' {yybegin(StringSQ);return STRING_SQ;}
 	\" {yybegin(StringDQ);return STRING_DQ;}
+	@{SYMBOL} {yybegin(StringRL);return SYMBOL;}
 }
 <StringSQ, StringDQ, YYINITIAL> {ESCAPE_SPECIAL} {
 	return ESCAPE_SPECIAL;
 }
 <StringSQ, StringDQ, YYINITIAL> {ESCAPE_UNICODE} {
 	return ESCAPE_UNICODE;
+}
+<StringRL> {
+	[^\r\n] {return CHARACTER;}
+	\r|\n {yybegin(YYINITIAL);return WHITE_SPACE;}
 }
 <StringSQ> {
 	[^\\\'] {return CHARACTER;}

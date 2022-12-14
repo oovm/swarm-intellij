@@ -28,15 +28,21 @@ public class SwarmFunctionCallNode extends ASTWrapperPsiElement implements Swarm
   }
 
   @Override
-  @NotNull
-  public SwarmIdentifier getIdentifier() {
-    return findNotNullChildByClass(SwarmIdentifier.class);
+  @Nullable
+  public SwarmCmdBlock getCmdBlock() {
+    return findChildByClass(SwarmCmdBlock.class);
   }
 
   @Override
   @NotNull
-  public SwarmParenthesis getParenthesis() {
-    return findNotNullChildByClass(SwarmParenthesis.class);
+  public SwarmFunctionArgs getFunctionArgs() {
+    return findNotNullChildByClass(SwarmFunctionArgs.class);
+  }
+
+  @Override
+  @NotNull
+  public SwarmIdentifier getIdentifier() {
+    return findNotNullChildByClass(SwarmIdentifier.class);
   }
 
 }

@@ -29,14 +29,8 @@ public class SwarmCmdBlockNode extends MixinRuleBody implements SwarmCmdBlock {
 
   @Override
   @NotNull
-  public List<SwarmCmdPair> getCmdPairList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, SwarmCmdPair.class);
-  }
-
-  @Override
-  @NotNull
-  public List<SwarmCmdString> getCmdStringList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, SwarmCmdString.class);
+  public List<SwarmCmdStatement> getCmdStatementList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, SwarmCmdStatement.class);
   }
 
 }

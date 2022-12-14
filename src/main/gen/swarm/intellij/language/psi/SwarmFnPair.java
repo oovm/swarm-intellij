@@ -5,12 +5,12 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface SwarmRange extends PsiElement {
+public interface SwarmFnPair extends PsiElement {
+
+  @NotNull
+  SwarmCmdValue getCmdValue();
 
   @Nullable
-  SwarmRangeEnd getRangeEnd();
-
-  @Nullable
-  SwarmRangeStart getRangeStart();
+  SwarmKey getKey();
 
 }

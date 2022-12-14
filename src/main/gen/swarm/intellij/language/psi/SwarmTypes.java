@@ -9,11 +9,11 @@ import swarm.intellij.language.psi_node.*;
 public interface SwarmTypes {
 
   IElementType ATOM = new SwarmElementType("ATOM");
-  IElementType BRANCH_MARK = new SwarmElementType("BRANCH_MARK");
   IElementType CHARSET = new SwarmElementType("CHARSET");
   IElementType CLASS_STATEMENT = new SwarmElementType("CLASS_STATEMENT");
   IElementType CMD_BLOCK = new SwarmElementType("CMD_BLOCK");
   IElementType CMD_PAIR = new SwarmElementType("CMD_PAIR");
+  IElementType CMD_STATEMENT = new SwarmElementType("CMD_STATEMENT");
   IElementType CMD_STRING = new SwarmElementType("CMD_STRING");
   IElementType CMD_VALUE = new SwarmElementType("CMD_VALUE");
   IElementType DEFINE_PAIR = new SwarmElementType("DEFINE_PAIR");
@@ -22,6 +22,9 @@ public interface SwarmTypes {
   IElementType EXPR = new SwarmElementType("EXPR");
   IElementType FIELD_MARK = new SwarmElementType("FIELD_MARK");
   IElementType FIELD_RHS = new SwarmElementType("FIELD_RHS");
+  IElementType FN_PAIR = new SwarmElementType("FN_PAIR");
+  IElementType FN_STATEMENT = new SwarmElementType("FN_STATEMENT");
+  IElementType FUNCTION_ARGS = new SwarmElementType("FUNCTION_ARGS");
   IElementType FUNCTION_CALL = new SwarmElementType("FUNCTION_CALL");
   IElementType IDENTIFIER = new SwarmElementType("IDENTIFIER");
   IElementType IMPORT_BODY = new SwarmElementType("IMPORT_BODY");
@@ -31,7 +34,6 @@ public interface SwarmTypes {
   IElementType KEY_SYMBOL = new SwarmElementType("KEY_SYMBOL");
   IElementType MACRO_ARG = new SwarmElementType("MACRO_ARG");
   IElementType MACRO_CALL = new SwarmElementType("MACRO_CALL");
-  IElementType MACRO_STATEMENT = new SwarmElementType("MACRO_STATEMENT");
   IElementType MODIFIERS = new SwarmElementType("MODIFIERS");
   IElementType NAMESPACE = new SwarmElementType("NAMESPACE");
   IElementType NAMESPACE_STATEMENT = new SwarmElementType("NAMESPACE_STATEMENT");
@@ -42,9 +44,6 @@ public interface SwarmTypes {
   IElementType PAIR = new SwarmElementType("PAIR");
   IElementType PARENTHESIS = new SwarmElementType("PARENTHESIS");
   IElementType PREFIX = new SwarmElementType("PREFIX");
-  IElementType RANGE = new SwarmElementType("RANGE");
-  IElementType RANGE_END = new SwarmElementType("RANGE_END");
-  IElementType RANGE_START = new SwarmElementType("RANGE_START");
   IElementType RULE_ATOM = new SwarmElementType("RULE_ATOM");
   IElementType RULE_BODY = new SwarmElementType("RULE_BODY");
   IElementType RULE_EXPR = new SwarmElementType("RULE_EXPR");
@@ -56,7 +55,6 @@ public interface SwarmTypes {
   IElementType TABLE = new SwarmElementType("TABLE");
   IElementType TERM = new SwarmElementType("TERM");
   IElementType TYPE_HINT = new SwarmElementType("TYPE_HINT");
-  IElementType UNION_STATEMENT = new SwarmElementType("UNION_STATEMENT");
   IElementType VALUE = new SwarmElementType("VALUE");
 
   IElementType ACCENT = new SwarmElementType("^");
@@ -70,6 +68,7 @@ public interface SwarmTypes {
   IElementType BRACE_R = new SwarmElementType("}");
   IElementType BRACKET_L = new SwarmElementType("[");
   IElementType BRACKET_R = new SwarmElementType("]");
+  IElementType BRANCH_MARK = new SwarmElementType("branch_mark");
   IElementType BYTE = new SwarmElementType("BYTE");
   IElementType CHARACTER = new SwarmElementType("CHARACTER");
   IElementType CHOOSE = new SwarmElementType("|");
@@ -93,7 +92,6 @@ public interface SwarmTypes {
   IElementType KW_DEFINE = new SwarmElementType("KW_DEFINE");
   IElementType KW_IMPORT = new SwarmElementType("KW_IMPORT");
   IElementType KW_NAMESPACE = new SwarmElementType("KW_NAMESPACE");
-  IElementType KW_UNION = new SwarmElementType("KW_UNION");
   IElementType LINE_ARG = new SwarmElementType("LINE_ARG");
   IElementType MANY = new SwarmElementType("*");
   IElementType MANY1 = new SwarmElementType("+");
@@ -102,6 +100,7 @@ public interface SwarmTypes {
   IElementType PARENTHESIS_L = new SwarmElementType("(");
   IElementType PARENTHESIS_R = new SwarmElementType(")");
   IElementType QUOTATION = new SwarmElementType("\"");
+  IElementType RANGE = new SwarmElementType("range");
   IElementType REGEX_RANGE = new SwarmElementType("REGEX_RANGE");
   IElementType SEMICOLON = new SwarmElementType(";");
   IElementType SIGN = new SwarmElementType("SIGN");
@@ -118,9 +117,6 @@ public interface SwarmTypes {
       if (type == ATOM) {
         return new SwarmAtomNode(node);
       }
-      else if (type == BRANCH_MARK) {
-        return new SwarmBranchMarkNode(node);
-      }
       else if (type == CHARSET) {
         return new SwarmCharsetNode(node);
       }
@@ -132,6 +128,9 @@ public interface SwarmTypes {
       }
       else if (type == CMD_PAIR) {
         return new SwarmCmdPairNode(node);
+      }
+      else if (type == CMD_STATEMENT) {
+        return new SwarmCmdStatementNode(node);
       }
       else if (type == CMD_STRING) {
         return new SwarmCmdStringNode(node);
@@ -156,6 +155,15 @@ public interface SwarmTypes {
       }
       else if (type == FIELD_RHS) {
         return new SwarmFieldRhsNode(node);
+      }
+      else if (type == FN_PAIR) {
+        return new SwarmFnPairNode(node);
+      }
+      else if (type == FN_STATEMENT) {
+        return new SwarmFnStatementNode(node);
+      }
+      else if (type == FUNCTION_ARGS) {
+        return new SwarmFunctionArgsNode(node);
       }
       else if (type == FUNCTION_CALL) {
         return new SwarmFunctionCallNode(node);
@@ -183,9 +191,6 @@ public interface SwarmTypes {
       }
       else if (type == MACRO_CALL) {
         return new SwarmMacroCallNode(node);
-      }
-      else if (type == MACRO_STATEMENT) {
-        return new SwarmMacroStatementNode(node);
       }
       else if (type == MODIFIERS) {
         return new SwarmModifiersNode(node);
@@ -216,15 +221,6 @@ public interface SwarmTypes {
       }
       else if (type == PREFIX) {
         return new SwarmPrefixNode(node);
-      }
-      else if (type == RANGE) {
-        return new SwarmRangeNode(node);
-      }
-      else if (type == RANGE_END) {
-        return new SwarmRangeEndNode(node);
-      }
-      else if (type == RANGE_START) {
-        return new SwarmRangeStartNode(node);
       }
       else if (type == RULE_ATOM) {
         return new SwarmRuleAtomNode(node);
@@ -258,9 +254,6 @@ public interface SwarmTypes {
       }
       else if (type == TYPE_HINT) {
         return new SwarmTypeHintNode(node);
-      }
-      else if (type == UNION_STATEMENT) {
-        return new SwarmUnionStatementNode(node);
       }
       else if (type == VALUE) {
         return new SwarmValueNode(node);

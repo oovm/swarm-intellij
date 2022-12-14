@@ -11,9 +11,6 @@ public interface SwarmRuleTerm extends PsiElement {
   List<SwarmPrefix> getPrefixList();
 
   @NotNull
-  List<SwarmRange> getRangeList();
-
-  @NotNull
   SwarmRuleAtom getRuleAtom();
 
   @NotNull

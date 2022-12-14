@@ -8,9 +8,6 @@ import com.intellij.psi.PsiElement;
 public interface SwarmRuleAtom extends PsiElement {
 
   @Nullable
-  SwarmBranchMark getBranchMark();
-
-  @Nullable
   SwarmCharset getCharset();
 
   @Nullable

@@ -5,9 +5,9 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface SwarmRangeEnd extends PsiElement {
+public interface SwarmFnStatement extends PsiElement {
 
-  @Nullable
-  SwarmNumberSuffix getNumberSuffix();
+  @NotNull
+  SwarmFnPair getFnPair();
 
 }

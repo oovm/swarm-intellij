@@ -11,14 +11,14 @@ import static swarm.intellij.language.psi.SwarmTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import swarm.intellij.language.psi.*;
 
-public class SwarmBranchMarkNode extends ASTWrapperPsiElement implements SwarmBranchMark {
+public class SwarmFnStatementNode extends ASTWrapperPsiElement implements SwarmFnStatement {
 
-  public SwarmBranchMarkNode(@NotNull ASTNode node) {
+  public SwarmFnStatementNode(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull SwarmVisitor visitor) {
-    visitor.visitBranchMark(this);
+    visitor.visitFnStatement(this);
   }
 
   @Override
@@ -29,8 +29,8 @@ public class SwarmBranchMarkNode extends ASTWrapperPsiElement implements SwarmBr
 
   @Override
   @NotNull
-  public SwarmIdentifier getIdentifier() {
-    return findNotNullChildByClass(SwarmIdentifier.class);
+  public SwarmFnPair getFnPair() {
+    return findNotNullChildByClass(SwarmFnPair.class);
   }
 
 }

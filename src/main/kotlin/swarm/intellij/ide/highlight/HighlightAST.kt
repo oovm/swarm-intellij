@@ -33,9 +33,7 @@ class HighlightAST : SwarmVisitor(), HighlightVisitor {
         highlight(o.identifier, HighlightColor.SYM_CLASS)
     }
 
-    override fun visitUnionStatement(o: SwarmUnionStatement) {
-        highlight(o.identifier, HighlightColor.SYM_UNION)
-    }
+
 
     override fun visitDefineStatement(o: SwarmDefineStatement) {
         o as SwarmDefineStatementNode
@@ -55,9 +53,6 @@ class HighlightAST : SwarmVisitor(), HighlightVisitor {
         highlight(o.identifier, HighlightColor.SYM_FUNCTION)
     }
 
-    override fun visitBranchMark(o: SwarmBranchMark) {
-        highlight(o, HighlightColor.BRANCH_MARK)
-    }
 
     override fun visitFieldMark(o: SwarmFieldMark) {
         highlight(o.firstChild, HighlightColor.FIELD_MARK)

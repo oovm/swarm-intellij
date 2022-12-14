@@ -11,10 +11,6 @@ public class SwarmVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitBranchMark(@NotNull SwarmBranchMark o) {
-    visitPsiElement(o);
-  }
-
   public void visitCharset(@NotNull SwarmCharset o) {
     visitPsiElement(o);
   }
@@ -28,6 +24,10 @@ public class SwarmVisitor extends PsiElementVisitor {
   }
 
   public void visitCmdPair(@NotNull SwarmCmdPair o) {
+    visitPsiElement(o);
+  }
+
+  public void visitCmdStatement(@NotNull SwarmCmdStatement o) {
     visitPsiElement(o);
   }
 
@@ -67,6 +67,18 @@ public class SwarmVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitFnPair(@NotNull SwarmFnPair o) {
+    visitPsiElement(o);
+  }
+
+  public void visitFnStatement(@NotNull SwarmFnStatement o) {
+    visitPsiElement(o);
+  }
+
+  public void visitFunctionArgs(@NotNull SwarmFunctionArgs o) {
+    visitPsiElement(o);
+  }
+
   public void visitFunctionCall(@NotNull SwarmFunctionCall o) {
     visitPsiElement(o);
   }
@@ -100,10 +112,6 @@ public class SwarmVisitor extends PsiElementVisitor {
   }
 
   public void visitMacroCall(@NotNull SwarmMacroCall o) {
-    visitPsiElement(o);
-  }
-
-  public void visitMacroStatement(@NotNull SwarmMacroStatement o) {
     visitPsiElement(o);
   }
 
@@ -144,18 +152,6 @@ public class SwarmVisitor extends PsiElementVisitor {
   }
 
   public void visitPrefix(@NotNull SwarmPrefix o) {
-    visitPsiElement(o);
-  }
-
-  public void visitRange(@NotNull SwarmRange o) {
-    visitPsiElement(o);
-  }
-
-  public void visitRangeEnd(@NotNull SwarmRangeEnd o) {
-    visitPsiElement(o);
-  }
-
-  public void visitRangeStart(@NotNull SwarmRangeStart o) {
     visitPsiElement(o);
   }
 
@@ -200,10 +196,6 @@ public class SwarmVisitor extends PsiElementVisitor {
   }
 
   public void visitTypeHint(@NotNull SwarmTypeHint o) {
-    visitPsiElement(o);
-  }
-
-  public void visitUnionStatement(@NotNull SwarmUnionStatement o) {
     visitPsiElement(o);
   }
 

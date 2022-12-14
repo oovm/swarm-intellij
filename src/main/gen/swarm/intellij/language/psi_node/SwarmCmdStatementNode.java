@@ -8,17 +8,17 @@ import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
 import static swarm.intellij.language.psi.SwarmTypes.*;
-import swarm.intellij.language.mixin.MixinUnionStatement;
+import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import swarm.intellij.language.psi.*;
 
-public class SwarmUnionStatementNode extends MixinUnionStatement implements SwarmUnionStatement {
+public class SwarmCmdStatementNode extends ASTWrapperPsiElement implements SwarmCmdStatement {
 
-  public SwarmUnionStatementNode(@NotNull ASTNode node) {
+  public SwarmCmdStatementNode(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull SwarmVisitor visitor) {
-    visitor.visitUnionStatement(this);
+    visitor.visitCmdStatement(this);
   }
 
   @Override
@@ -28,27 +28,21 @@ public class SwarmUnionStatementNode extends MixinUnionStatement implements Swar
   }
 
   @Override
-  @NotNull
-  public SwarmIdentifier getIdentifier() {
-    return findNotNullChildByClass(SwarmIdentifier.class);
-  }
-
-  @Override
-  @NotNull
-  public SwarmModifiers getModifiers() {
-    return findNotNullChildByClass(SwarmModifiers.class);
+  @Nullable
+  public SwarmCmdPair getCmdPair() {
+    return findChildByClass(SwarmCmdPair.class);
   }
 
   @Override
   @Nullable
-  public SwarmRuleBody getRuleBody() {
-    return findChildByClass(SwarmRuleBody.class);
+  public SwarmCmdString getCmdString() {
+    return findChildByClass(SwarmCmdString.class);
   }
 
   @Override
   @Nullable
-  public SwarmRuleType getRuleType() {
-    return findChildByClass(SwarmRuleType.class);
+  public SwarmFunctionCall getFunctionCall() {
+    return findChildByClass(SwarmFunctionCall.class);
   }
 
 }

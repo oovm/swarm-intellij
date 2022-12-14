@@ -5,12 +5,15 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface SwarmBodyPair extends PsiElement {
+public interface SwarmFunctionArguments extends PsiElement {
 
   @NotNull
-  SwarmNamespace getNamespace();
+  List<SwarmCmdPair> getCmdPairList();
 
   @NotNull
-  SwarmValue getValue();
+  List<SwarmCmdString> getCmdStringList();
+
+  @NotNull
+  List<SwarmFunctionCall> getFunctionCallList();
 
 }

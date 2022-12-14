@@ -35,12 +35,6 @@ public class SwarmRuleTermNode extends ASTWrapperPsiElement implements SwarmRule
 
   @Override
   @NotNull
-  public List<SwarmRange> getRangeList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, SwarmRange.class);
-  }
-
-  @Override
-  @NotNull
   public SwarmRuleAtom getRuleAtom() {
     return findNotNullChildByClass(SwarmRuleAtom.class);
   }

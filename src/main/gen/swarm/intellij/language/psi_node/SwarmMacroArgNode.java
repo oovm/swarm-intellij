@@ -28,15 +28,9 @@ public class SwarmMacroArgNode extends ASTWrapperPsiElement implements SwarmMacr
   }
 
   @Override
-  @Nullable
-  public SwarmMacroStatement getMacroStatement() {
-    return findChildByClass(SwarmMacroStatement.class);
-  }
-
-  @Override
-  @Nullable
+  @NotNull
   public SwarmValue getValue() {
-    return findChildByClass(SwarmValue.class);
+    return findNotNullChildByClass(SwarmValue.class);
   }
 
 }

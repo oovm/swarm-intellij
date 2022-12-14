@@ -5,18 +5,15 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface SwarmUnionStatement extends PsiElement {
-
-  @NotNull
-  SwarmIdentifier getIdentifier();
-
-  @NotNull
-  SwarmModifiers getModifiers();
+public interface SwarmCmdStatement extends PsiElement {
 
   @Nullable
-  SwarmRuleBody getRuleBody();
+  SwarmCmdPair getCmdPair();
 
   @Nullable
-  SwarmRuleType getRuleType();
+  SwarmCmdString getCmdString();
+
+  @Nullable
+  SwarmFunctionCall getFunctionCall();
 
 }

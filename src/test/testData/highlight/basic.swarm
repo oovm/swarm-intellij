@@ -16,24 +16,24 @@ def maven {
 
 def jdk(key: Secret = "abc") {
     steps {
-        cargo.run: a
+        cargo.run "a"
         cargo(
-            workspace a
+            workspace: "a"
 
         )
-        log.info: Hello, JDK
-        run: java -version -k ${key}
+        @info Hello, JDK
+        @run java -version -k ${key}
         retry(3) {
             timeout(10s) {
-                print "Retry 3 times, each time to complete within 10s"
+                @print Retry 3 times, each time to complete within 10s
             }
         }
         timeout(10s) {
             retry(3) {
-                print "Retry 3 times, complete within 10 seconds"
+                @print Retry 3 times, complete within 10 seconds
             }
         }
-        if clean {
+        if clean != 2 {
 
         }
         else {
