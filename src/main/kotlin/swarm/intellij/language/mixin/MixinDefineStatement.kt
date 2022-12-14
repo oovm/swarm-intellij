@@ -10,7 +10,7 @@ import swarm.intellij.language.psi_node.SwarmRuleBodyNode
 open class MixinDefineStatement(node: ASTNode) : DeclareNode(node) {
     override fun getOriginalElement() = this as SwarmDefineStatementNode
 
-    override fun getNameIdentifier() = originalElement.identifier as SwarmIdentifierNode
+    override fun getNameIdentifier() = originalElement.namespace.lastChild as SwarmIdentifierNode
 
     override fun getIcon(flags: Int) = SwarmIcon.KEYWORD
 
@@ -28,11 +28,11 @@ open class MixinDefineStatement(node: ASTNode) : DeclareNode(node) {
                     names.add(pair.identifier.text)
                 }
             }
-            for (node in (originalElement.ruleBody as SwarmRuleBodyNode).identifiers) {
-                if (node.name in names) {
-                    list.add(node)
-                }
-            }
+//            for (node in (originalElement.ruleBody as SwarmRuleBodyNode).identifiers) {
+//                if (node.name in names) {
+//                    list.add(node)
+//                }
+//            }
             return list.toTypedArray()
         }
 }

@@ -19,16 +19,6 @@ class HighlightAST : SwarmVisitor(), HighlightVisitor {
 
     override fun visit(element: PsiElement) = element.accept(this)
 
-    override fun visitGrammarStatement(o: SwarmGrammarStatement) {
-        highlight(o.firstChild, HighlightColor.KEYWORD)
-        highlight(o.identifier, HighlightColor.SYM_MACRO)
-    }
-
-    override fun visitExportStatement(o: SwarmExportStatement) {
-        highlight(o.firstChild, HighlightColor.KEYWORD)
-        highlight(o.identifier, HighlightColor.SYM_MACRO)
-    }
-
     override fun visitImportStatement(o: SwarmImportStatement) {
         highlight(o.firstChild, HighlightColor.KEYWORD)
     }
@@ -49,7 +39,7 @@ class HighlightAST : SwarmVisitor(), HighlightVisitor {
 
     override fun visitDefineStatement(o: SwarmDefineStatement) {
         o as SwarmDefineStatementNode
-        highlight(o.identifier, HighlightColor.SYM_FUNCTION)
+        highlight(o.namespace.lastChild, HighlightColor.SYM_FUNCTION)
         for (node in o.parameterNodes) {
             highlight(node, HighlightColor.SYM_PARAMETER)
         }

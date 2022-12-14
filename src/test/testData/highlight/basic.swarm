@@ -1,11 +1,11 @@
 namespace rust;
 
-/// rust.cargo.run
+
 def cargo.run() {
 
 }
 
-/// 
+
 def maven {
     system "windows"
     shell {

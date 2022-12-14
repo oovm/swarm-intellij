@@ -27,6 +27,10 @@ public class SwarmVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
+  public void visitDefineBody(@NotNull SwarmDefineBody o) {
+    visitPsiElement(o);
+  }
+
   public void visitDefinePair(@NotNull SwarmDefinePair o) {
     visitPsiElement(o);
   }
@@ -36,10 +40,6 @@ public class SwarmVisitor extends PsiElementVisitor {
   }
 
   public void visitDefineStatement(@NotNull SwarmDefineStatement o) {
-    visitPsiElement(o);
-  }
-
-  public void visitExportStatement(@NotNull SwarmExportStatement o) {
     visitPsiElement(o);
   }
 

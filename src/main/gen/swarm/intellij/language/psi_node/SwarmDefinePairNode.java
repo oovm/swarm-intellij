@@ -39,4 +39,10 @@ public class SwarmDefinePairNode extends ASTWrapperPsiElement implements SwarmDe
     return findNotNullChildByClass(SwarmIdentifier.class);
   }
 
+  @Override
+  @Nullable
+  public SwarmRuleType getRuleType() {
+    return findChildByClass(SwarmRuleType.class);
+  }
+
 }

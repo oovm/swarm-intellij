@@ -29,6 +29,12 @@ public class SwarmDefineStatementNode extends MixinDefineStatement implements Sw
 
   @Override
   @Nullable
+  public SwarmDefineBody getDefineBody() {
+    return findChildByClass(SwarmDefineBody.class);
+  }
+
+  @Override
+  @Nullable
   public SwarmDefineParameters getDefineParameters() {
     return findChildByClass(SwarmDefineParameters.class);
   }

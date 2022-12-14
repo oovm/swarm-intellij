@@ -12,10 +12,10 @@ public interface SwarmTypes {
   IElementType BRANCH_MARK = new SwarmElementType("BRANCH_MARK");
   IElementType CHARSET = new SwarmElementType("CHARSET");
   IElementType CLASS_STATEMENT = new SwarmElementType("CLASS_STATEMENT");
+  IElementType DEFINE_BODY = new SwarmElementType("DEFINE_BODY");
   IElementType DEFINE_PAIR = new SwarmElementType("DEFINE_PAIR");
   IElementType DEFINE_PARAMETERS = new SwarmElementType("DEFINE_PARAMETERS");
   IElementType DEFINE_STATEMENT = new SwarmElementType("DEFINE_STATEMENT");
-  IElementType EXPORT_STATEMENT = new SwarmElementType("EXPORT_STATEMENT");
   IElementType EXPR = new SwarmElementType("EXPR");
   IElementType FIELD_MARK = new SwarmElementType("FIELD_MARK");
   IElementType FIELD_RHS = new SwarmElementType("FIELD_RHS");
@@ -76,7 +76,6 @@ public interface SwarmTypes {
   IElementType COMMENT_DOC = new SwarmElementType("COMMENT_DOC");
   IElementType COMMENT_LINE = new SwarmElementType("COMMENT_LINE");
   IElementType DECIMAL = new SwarmElementType("DECIMAL");
-  IElementType DEFINE_BODY = new SwarmElementType("define_body");
   IElementType DOLLAR = new SwarmElementType("$");
   IElementType DOT = new SwarmElementType(".");
   IElementType DOUBLE_COLON = new SwarmElementType("DOUBLE_COLON");
@@ -124,6 +123,9 @@ public interface SwarmTypes {
       else if (type == CLASS_STATEMENT) {
         return new SwarmClassStatementNode(node);
       }
+      else if (type == DEFINE_BODY) {
+        return new SwarmDefineBodyNode(node);
+      }
       else if (type == DEFINE_PAIR) {
         return new SwarmDefinePairNode(node);
       }
@@ -132,9 +134,6 @@ public interface SwarmTypes {
       }
       else if (type == DEFINE_STATEMENT) {
         return new SwarmDefineStatementNode(node);
-      }
-      else if (type == EXPORT_STATEMENT) {
-        return new SwarmExportStatementNode(node);
       }
       else if (type == EXPR) {
         return new SwarmExprNode(node);

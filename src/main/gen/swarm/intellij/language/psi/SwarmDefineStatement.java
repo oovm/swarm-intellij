@@ -8,6 +8,9 @@ import com.intellij.psi.PsiElement;
 public interface SwarmDefineStatement extends PsiElement {
 
   @Nullable
+  SwarmDefineBody getDefineBody();
+
+  @Nullable
   SwarmDefineParameters getDefineParameters();
 
   @NotNull

@@ -13,4 +13,7 @@ public interface SwarmDefinePair extends PsiElement {
   @NotNull
   SwarmIdentifier getIdentifier();
 
+  @Nullable
+  SwarmRuleType getRuleType();
+
 }

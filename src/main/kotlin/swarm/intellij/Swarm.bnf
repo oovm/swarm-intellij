@@ -57,24 +57,19 @@ private comment ::= COMMENT_LINE | COMMENT_BLOCK | COMMENT_DOC;
 
 private statements ::=
       namespace_statement
+    | import_statement
     | define_statement
+    | macro_statement
     | SEMICOLON;
 // ---------------------------------------------------------------------------------------------------------------------
 // @grammar swarm {"*.yg","*.swarm", "*.grammar"}
 // @grammar swarm;
 namespace_statement ::= KW_NAMESPACE namespace {
-    pin = identifier
-    recoverWhile = BRACE_R
+    pin = namespace
 };
 // ---------------------------------------------------------------------------------------------------------------------
-// @import
-export_statement ::= "codegen" identifier object {
-    pin = identifier
-    recoverWhile = BRACE_R
-}
 import_statement ::= KW_IMPORT string_literal [import_body] {
     pin = string_literal
-    recoverWhile = BRACE_R
 }
 import_body      ::= BRACE_L [identifier (COMMA identifier)* [COMMA]] BRACE_R;
 // ---------------------------------------------------------------------------------------------------------------------
@@ -85,7 +80,6 @@ macro_arg ::= value | macro_statement;
 // def modifiers rule
 class_statement ::= KW_CLASS modifiers identifier [rule_type] rule_body {
     pin = identifier
-    recoverWhile = BRACE_R
     mixin = "swarm.intellij.language.mixin.MixinClassStatement"
 };
 rule_body     ::= BRACE_L [CHOOSE] [rule_expr] BRACE_R {
@@ -95,17 +89,18 @@ rule_type     ::= (COLON | ARROW) identifier;
 // =====================================================================================================================
 union_statement ::= KW_UNION modifiers identifier [rule_type] rule_body {
     pin = identifier
-    recoverWhile = BRACE_R
     mixin = "swarm.intellij.language.mixin.MixinUnionStatement"
 };
 // =====================================================================================================================
 define_statement ::= KW_DEFINE modifiers namespace [define_parameters] define_body {
     pin = namespace
-    recoverWhile = BRACE_R
     mixin = "swarm.intellij.language.mixin.MixinDefineStatement"
 };
 define_parameters ::= PARENTHESIS_L [define_pair (COMMA define_pair)* COMMA?] PARENTHESIS_R;
-define_pair ::= identifier [EQ expr];
+define_pair       ::= identifier [COLON rule_type] [EQ expr];
+define_body       ::= BRACE_L [CHOOSE] [rule_expr] BRACE_R {
+    mixin = "swarm.intellij.language.mixin.MixinRuleBody"
+}
 // =====================================================================================================================
 rule_expr ::= rule_term (infix rule_term | rule_term)*;
 rule_term ::= (prefix)* rule_atom (suffix| range)*
@@ -157,8 +152,8 @@ object ::= BRACE_L (object_item [COMMA|SEMICOLON])* BRACE_R
 object_item ::= object_key COLON value;
 object_key ::= identifier | string_literal;
 // ---------------------------------------------------------------------------------------------------------------------
-modifiers ::= (identifier !('('|'{'|ARROW|':'))*;
-namespace ::= identifier (DOUBLE_COLON identifier)*
+modifiers ::= (identifier !('('|'{'|ARROW|DOT|HYPHEN|COLON))*;
+namespace ::= identifier ((DOT|HYPHEN|DOUBLE_COLON) identifier)*
 identifier ::= SYMBOL {
     mixin = "swarm.intellij.language.mixin.MixinIdentifier"
 }
