@@ -74,6 +74,9 @@ import_statement ::= KW_IMPORT string_literal [import_body] {
 }
 import_body      ::= BRACE_L [identifier (COMMA identifier)* [COMMA]] BRACE_R;
 // ---------------------------------------------------------------------------------------------------------------------
+
+
+
 macro_arg ::= value;
 // =====================================================================================================================
 // def modifiers rule
@@ -81,12 +84,10 @@ task_statement ::= KW_TASK modifiers namespace cmd_block {
     pin = namespace
     mixin = "swarm.intellij.language.mixin.MixinTaskStatement"
 };
-// =====================================================================================================================
-define_statement ::= KW_DEFINE modifiers namespace def_parameters cmd_block {
-    pin = namespace
-    mixin = "swarm.intellij.language.mixin.MixinDefineStatement"
+// ---------------------------------------------------------------------------------------------------------------------
+input_statement ::= KW_INPUT BRACE_L [define_pair (COMMA define_pair)* COMMA?] BRACE_R {
+//    mixin = "swarm.intellij.language.mixin.MixinInputStatement"
 };
-def_parameters   ::= PARENTHESIS_L [define_pair (COMMA define_pair)* COMMA?] PARENTHESIS_R;
 define_pair      ::= identifier [COLON define_type] [EQ expr] {
     mixin = "swarm.intellij.language.mixin.MixinDefineParameter"
 }
@@ -96,18 +97,17 @@ cmd_block       ::= BRACE_L cmd_statement* BRACE_R {
     mixin = "swarm.intellij.language.mixin.MixinRuleBody"
 }
 cmd_statement ::=
-      cmd_pair
-    | cmd_string
+      input_statement
+    | cmd_pair
     | function_call
     | SEMICOLON
     | COMMA
     ;
-cmd_pair   ::= namespace [EQ|COLON] cmd_value;
-cmd_string ::= namespace LINE_ARG;
+cmd_pair   ::= namespace [COLON] cmd_value;
 cmd_value  ::= BOOLEAN | num | string_literal | cmd_block;
 // ---------------------------------------------------------------------------------------------------------------------
 // @function("path")
-function_call ::= identifier function_args [cmd_block];
+function_call ::= namespace function_args [cmd_block];
 function_args ::= PARENTHESIS_L fn_statement* PARENTHESIS_R;
 fn_statement  ::= fn_pair|COMMA;
 fn_pair   ::= [key (EQ|COLON)] cmd_value;

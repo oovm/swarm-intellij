@@ -5,15 +5,9 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface SwarmFunctionCall extends PsiElement {
-
-  @Nullable
-  SwarmCmdBlock getCmdBlock();
+public interface SwarmInputStatement extends PsiElement {
 
   @NotNull
-  SwarmFunctionArgs getFunctionArgs();
-
-  @NotNull
-  SwarmNamespace getNamespace();
+  List<SwarmDefinePair> getDefinePairList();
 
 }

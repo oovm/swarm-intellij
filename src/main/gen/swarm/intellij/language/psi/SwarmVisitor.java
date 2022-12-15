@@ -27,10 +27,6 @@ public class SwarmVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitCmdString(@NotNull SwarmCmdString o) {
-    visitPsiElement(o);
-  }
-
   public void visitCmdValue(@NotNull SwarmCmdValue o) {
     visitPsiElement(o);
   }
@@ -96,6 +92,10 @@ public class SwarmVisitor extends PsiElementVisitor {
   }
 
   public void visitInfix(@NotNull SwarmInfix o) {
+    visitPsiElement(o);
+  }
+
+  public void visitInputStatement(@NotNull SwarmInputStatement o) {
     visitPsiElement(o);
   }
 

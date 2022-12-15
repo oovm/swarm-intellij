@@ -35,14 +35,14 @@ public class SwarmCmdStatementNode extends ASTWrapperPsiElement implements Swarm
 
   @Override
   @Nullable
-  public SwarmCmdString getCmdString() {
-    return findChildByClass(SwarmCmdString.class);
+  public SwarmFunctionCall getFunctionCall() {
+    return findChildByClass(SwarmFunctionCall.class);
   }
 
   @Override
   @Nullable
-  public SwarmFunctionCall getFunctionCall() {
-    return findChildByClass(SwarmFunctionCall.class);
+  public SwarmInputStatement getInputStatement() {
+    return findChildByClass(SwarmInputStatement.class);
   }
 
 }

@@ -13,7 +13,6 @@ public interface SwarmTypes {
   IElementType CMD_BLOCK = new SwarmElementType("CMD_BLOCK");
   IElementType CMD_PAIR = new SwarmElementType("CMD_PAIR");
   IElementType CMD_STATEMENT = new SwarmElementType("CMD_STATEMENT");
-  IElementType CMD_STRING = new SwarmElementType("CMD_STRING");
   IElementType CMD_VALUE = new SwarmElementType("CMD_VALUE");
   IElementType DEFINE_PAIR = new SwarmElementType("DEFINE_PAIR");
   IElementType DEFINE_STATEMENT = new SwarmElementType("DEFINE_STATEMENT");
@@ -30,6 +29,7 @@ public interface SwarmTypes {
   IElementType IMPORT_BODY = new SwarmElementType("IMPORT_BODY");
   IElementType IMPORT_STATEMENT = new SwarmElementType("IMPORT_STATEMENT");
   IElementType INFIX = new SwarmElementType("INFIX");
+  IElementType INPUT_STATEMENT = new SwarmElementType("INPUT_STATEMENT");
   IElementType KEY = new SwarmElementType("KEY");
   IElementType KEY_SYMBOL = new SwarmElementType("KEY_SYMBOL");
   IElementType MACRO_ARG = new SwarmElementType("MACRO_ARG");
@@ -89,9 +89,9 @@ public interface SwarmTypes {
   IElementType INTEGER = new SwarmElementType("INTEGER");
   IElementType KW_DEFINE = new SwarmElementType("KW_DEFINE");
   IElementType KW_IMPORT = new SwarmElementType("KW_IMPORT");
+  IElementType KW_INPUT = new SwarmElementType("KW_INPUT");
   IElementType KW_NAMESPACE = new SwarmElementType("KW_NAMESPACE");
   IElementType KW_TASK = new SwarmElementType("KW_TASK");
-  IElementType LINE_ARG = new SwarmElementType("LINE_ARG");
   IElementType MANY = new SwarmElementType("*");
   IElementType MANY1 = new SwarmElementType("+");
   IElementType NOT = new SwarmElementType("!");
@@ -127,9 +127,6 @@ public interface SwarmTypes {
       }
       else if (type == CMD_STATEMENT) {
         return new SwarmCmdStatementNode(node);
-      }
-      else if (type == CMD_STRING) {
-        return new SwarmCmdStringNode(node);
       }
       else if (type == CMD_VALUE) {
         return new SwarmCmdValueNode(node);
@@ -178,6 +175,9 @@ public interface SwarmTypes {
       }
       else if (type == INFIX) {
         return new SwarmInfixNode(node);
+      }
+      else if (type == INPUT_STATEMENT) {
+        return new SwarmInputStatementNode(node);
       }
       else if (type == KEY) {
         return new SwarmKeyNode(node);

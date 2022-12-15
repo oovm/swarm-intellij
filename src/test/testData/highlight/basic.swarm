@@ -1,31 +1,45 @@
 namespace rust
 
 
-def cargo-run() {
+task cargo.install {
 
 }
 
-def cargo-test() {
+task cargo-test {
 
 }
 
-
-
-def maven() {
+task maven {
     system windows
     shell {
         location usr/
     }
 }
 
-
-def jdk(key: Secret = "abc", slot: Slot) {
+// Prepare JDK
+//
+// ## JDK
+#parallel
+task jdk {
     input {
-        key(1, "abc")
+    key: String = ""
     }
-    steps {
-        cargo run --test
+    when {
+        branch production
+        environment {
+            name DEPLOY_TO
+            value production
+        }
+    }
+    steps("build") {
+        steps {
+
+        }
+        cargo run --debug
         cargo-run("test")
+        a: dedent("
+
+        ")
         cargo(
             workspace: "a"
             nice: "a"
@@ -38,9 +52,9 @@ def jdk(key: Secret = "abc", slot: Slot) {
         }
         retry(3) {
             timeout(10s) {
-                a.sleep(100ms)
+                sleep(100ms)
                 print Retry 3 times, each time to complete within 10s
-                a = 2
+
             }
         }
         timeout(10s) {
@@ -49,6 +63,9 @@ def jdk(key: Secret = "abc", slot: Slot) {
             }
         }
         slot(2)
+    }
+    steps {
+
     }
     success {
 

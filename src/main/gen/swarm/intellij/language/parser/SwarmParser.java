@@ -121,7 +121,7 @@ public class SwarmParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // namespace [EQ|COLON] cmd_value
+  // namespace [COLON] cmd_value
   public static boolean cmd_pair(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "cmd_pair")) return false;
     if (!nextTokenIs(b, SYMBOL)) return false;
@@ -134,25 +134,16 @@ public class SwarmParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // [EQ|COLON]
+  // [COLON]
   private static boolean cmd_pair_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "cmd_pair_1")) return false;
-    cmd_pair_1_0(b, l + 1);
+    consumeToken(b, COLON);
     return true;
   }
 
-  // EQ|COLON
-  private static boolean cmd_pair_1_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "cmd_pair_1_0")) return false;
-    boolean r;
-    r = consumeToken(b, EQ);
-    if (!r) r = consumeToken(b, COLON);
-    return r;
-  }
-
   /* ********************************************************** */
-  // cmd_pair
-  //     | cmd_string
+  // input_statement
+  //     | cmd_pair
   //     | function_call
   //     | SEMICOLON
   //     | COMMA
@@ -160,25 +151,12 @@ public class SwarmParser implements PsiParser, LightPsiParser {
     if (!recursion_guard_(b, l, "cmd_statement")) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, CMD_STATEMENT, "<cmd statement>");
-    r = cmd_pair(b, l + 1);
-    if (!r) r = cmd_string(b, l + 1);
+    r = input_statement(b, l + 1);
+    if (!r) r = cmd_pair(b, l + 1);
     if (!r) r = function_call(b, l + 1);
     if (!r) r = consumeToken(b, SEMICOLON);
     if (!r) r = consumeToken(b, COMMA);
     exit_section_(b, l, m, r, false, null);
-    return r;
-  }
-
-  /* ********************************************************** */
-  // namespace LINE_ARG
-  public static boolean cmd_string(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "cmd_string")) return false;
-    if (!nextTokenIs(b, SYMBOL)) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = namespace(b, l + 1);
-    r = r && consumeToken(b, LINE_ARG);
-    exit_section_(b, m, CMD_STRING, r);
     return r;
   }
 
@@ -519,13 +497,13 @@ public class SwarmParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // identifier function_args [cmd_block]
+  // namespace function_args [cmd_block]
   public static boolean function_call(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "function_call")) return false;
     if (!nextTokenIs(b, SYMBOL)) return false;
     boolean r;
     Marker m = enter_section_(b);
-    r = identifier(b, l + 1);
+    r = namespace(b, l + 1);
     r = r && function_args(b, l + 1);
     r = r && function_call_2(b, l + 1);
     exit_section_(b, m, FUNCTION_CALL, r);
@@ -646,6 +624,78 @@ public class SwarmParser implements PsiParser, LightPsiParser {
     if (!r) r = consumeToken(b, SOFT_CONNECT);
     exit_section_(b, l, m, r, false, null);
     return r;
+  }
+
+  /* ********************************************************** */
+  // KW_INPUT BRACE_L [define_pair (COMMA define_pair)* COMMA?] BRACE_R {
+  // //    mixin = "swarm.intellij.language.mixin.MixinInputStatement"
+  // }
+  public static boolean input_statement(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "input_statement")) return false;
+    if (!nextTokenIs(b, KW_INPUT)) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeTokens(b, 0, KW_INPUT, BRACE_L);
+    r = r && input_statement_2(b, l + 1);
+    r = r && consumeToken(b, BRACE_R);
+    r = r && input_statement_4(b, l + 1);
+    exit_section_(b, m, INPUT_STATEMENT, r);
+    return r;
+  }
+
+  // [define_pair (COMMA define_pair)* COMMA?]
+  private static boolean input_statement_2(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "input_statement_2")) return false;
+    input_statement_2_0(b, l + 1);
+    return true;
+  }
+
+  // define_pair (COMMA define_pair)* COMMA?
+  private static boolean input_statement_2_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "input_statement_2_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = define_pair(b, l + 1);
+    r = r && input_statement_2_0_1(b, l + 1);
+    r = r && input_statement_2_0_2(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // (COMMA define_pair)*
+  private static boolean input_statement_2_0_1(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "input_statement_2_0_1")) return false;
+    while (true) {
+      int c = current_position_(b);
+      if (!input_statement_2_0_1_0(b, l + 1)) break;
+      if (!empty_element_parsed_guard_(b, "input_statement_2_0_1", c)) break;
+    }
+    return true;
+  }
+
+  // COMMA define_pair
+  private static boolean input_statement_2_0_1_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "input_statement_2_0_1_0")) return false;
+    boolean r;
+    Marker m = enter_section_(b);
+    r = consumeToken(b, COMMA);
+    r = r && define_pair(b, l + 1);
+    exit_section_(b, m, null, r);
+    return r;
+  }
+
+  // COMMA?
+  private static boolean input_statement_2_0_2(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "input_statement_2_0_2")) return false;
+    consumeToken(b, COMMA);
+    return true;
+  }
+
+  // {
+  // //    mixin = "swarm.intellij.language.mixin.MixinInputStatement"
+  // }
+  private static boolean input_statement_4(PsiBuilder b, int l) {
+    return true;
   }
 
   /* ********************************************************** */

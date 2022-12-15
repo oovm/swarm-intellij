@@ -11,9 +11,9 @@ public interface SwarmCmdStatement extends PsiElement {
   SwarmCmdPair getCmdPair();
 
   @Nullable
-  SwarmCmdString getCmdString();
+  SwarmFunctionCall getFunctionCall();
 
   @Nullable
-  SwarmFunctionCall getFunctionCall();
+  SwarmInputStatement getInputStatement();
 
 }

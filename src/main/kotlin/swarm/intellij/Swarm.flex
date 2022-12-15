@@ -48,6 +48,7 @@ KW_NAMESPACE = namespace|module|mod
 KW_DEFINE    = define|def|function|fun|fn
 KW_IMPORT    = import|using|use
 KW_TASK      = task|pipeline
+KW_INPUT	 = input
 
 %%
 <YYINITIAL> {
@@ -62,7 +63,7 @@ KW_TASK      = task|pipeline
 	{KW_TASK}      { return KW_TASK; }
 	{KW_DEFINE}    { return KW_DEFINE; }
 	{KW_IMPORT}    { return KW_IMPORT; }
-    // {LINE_ARG}     { return LINE_ARG; }
+    {KW_INPUT}     { return KW_INPUT; }
 }
 
 <YYINITIAL> {
@@ -111,29 +112,21 @@ KW_TASK      = task|pipeline
 	\' {yybegin(StringSQ);return STRING_SQ;}
 	\" {yybegin(StringDQ);return STRING_DQ;}
 	{SYMBOL} {
-        int ptr = zzMarkedPos;
-        while (ptr < zzEndRead) {
-            char c = zzBuffer.charAt(ptr);
-            ptr++;
-            if (Character.isWhitespace(c)) {
-                continue;
-            }
-            switch (c) {
-                case '(':
-                case ')':
-                case '{':
-                case ':':
-                case '[':
-                case '<':
-                case '=':
-                case '.':
-                case ',':
-                    break;
-                default:
-                    yybegin(StringRL);
-            }
-            return SYMBOL;
-        }
+	    int ptr = zzMarkedPos;
+	    while (ptr < zzEndRead) {
+	        char c = zzBuffer.charAt(ptr);
+	        ptr++;
+	        if (Character.isWhitespace(c)) {
+	            continue;
+	        }
+	        switch (c) {
+	            case '(', ')', '{', '[', ':', '<', '=', '.', ',' -> {
+	            }
+	            default -> yybegin(StringRL);
+	        }
+	        return SYMBOL;
+	    }
+	    return SYMBOL;
 	}
 }
 <StringSQ, StringDQ, YYINITIAL> {ESCAPE_SPECIAL} {
@@ -143,15 +136,15 @@ KW_TASK      = task|pipeline
 	return ESCAPE_UNICODE;
 }
 <StringRL> {
-	[^\r\n] {return CHARACTER;}
+	[^\r\n]+ {return CHARACTER;}
 	\r|\n {yybegin(YYINITIAL);return WHITE_SPACE;}
 }
 <StringSQ> {
-	[^\\\'] {return CHARACTER;}
+	[^\\\']+ {return CHARACTER;}
 	\' {yybegin(YYINITIAL);return STRING_SQ;}
 }
 <StringDQ> {
-	[^\\\"] {return CHARACTER;}
+	[^\\\"]+ {return CHARACTER;}
 	\" {yybegin(YYINITIAL);return STRING_DQ;}
 }
 // Regex Mode ==========================================================================================================

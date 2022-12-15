@@ -11,14 +11,14 @@ import static swarm.intellij.language.psi.SwarmTypes.*;
 import com.intellij.extapi.psi.ASTWrapperPsiElement;
 import swarm.intellij.language.psi.*;
 
-public class SwarmFunctionCallNode extends ASTWrapperPsiElement implements SwarmFunctionCall {
+public class SwarmInputStatementNode extends ASTWrapperPsiElement implements SwarmInputStatement {
 
-  public SwarmFunctionCallNode(@NotNull ASTNode node) {
+  public SwarmInputStatementNode(@NotNull ASTNode node) {
     super(node);
   }
 
   public void accept(@NotNull SwarmVisitor visitor) {
-    visitor.visitFunctionCall(this);
+    visitor.visitInputStatement(this);
   }
 
   @Override
@@ -28,21 +28,9 @@ public class SwarmFunctionCallNode extends ASTWrapperPsiElement implements Swarm
   }
 
   @Override
-  @Nullable
-  public SwarmCmdBlock getCmdBlock() {
-    return findChildByClass(SwarmCmdBlock.class);
-  }
-
-  @Override
   @NotNull
-  public SwarmFunctionArgs getFunctionArgs() {
-    return findNotNullChildByClass(SwarmFunctionArgs.class);
-  }
-
-  @Override
-  @NotNull
-  public SwarmNamespace getNamespace() {
-    return findNotNullChildByClass(SwarmNamespace.class);
+  public List<SwarmDefinePair> getDefinePairList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, SwarmDefinePair.class);
   }
 
 }
