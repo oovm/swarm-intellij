@@ -11,7 +11,7 @@ private val infix = TokenSet.create(SwarmTypes.EQ)
 
 private val suffix = TokenSet.create(SwarmTypes.OPTIONAL, SwarmTypes.MANY, SwarmTypes.MANY1)
 
-private val declare = TokenSet.create(SwarmTypes.KW_TASK, SwarmTypes.KW_DEFINE)
+private val declare = TokenSet.create(SwarmTypes.KW_TASK)
 
 
 fun createSpacingBuilder(commonSettings: CommonCodeStyleSettings): SpacingBuilder {

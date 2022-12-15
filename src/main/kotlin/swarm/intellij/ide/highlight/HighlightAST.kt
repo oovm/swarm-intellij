@@ -8,7 +8,6 @@ import com.intellij.psi.PsiElement
 import com.intellij.psi.PsiFile
 import swarm.intellij.language.file.SwarmFileNode
 import swarm.intellij.language.psi.*
-import swarm.intellij.language.psi_node.SwarmDefineStatementNode
 
 class HighlightAST : SwarmVisitor(), HighlightVisitor {
     private var infoHolder: HighlightInfoHolder? = null
@@ -31,16 +30,12 @@ class HighlightAST : SwarmVisitor(), HighlightVisitor {
 
 
     override fun visitTaskStatement(o: SwarmTaskStatement) {
-        highlight(o.namespace, HighlightColor.SYM_CLASS)
-    }
-
-
-    override fun visitDefineStatement(o: SwarmDefineStatement) {
-        o as SwarmDefineStatementNode
-        highlight(o.namespace.lastChild, HighlightColor.SYM_FUNCTION)
-        for (node in o.parameterNodes) {
-            highlight(node, HighlightColor.SYM_PARAMETER)
-        }
+        highlight(o.namespace.lastChild, HighlightColor.SYM_CLASS)
+//        o as SwarmDefineStatementNode
+//        highlight(o.namespace.lastChild, HighlightColor.SYM_FUNCTION)
+//        for (node in o.parameterNodes) {
+//            highlight(node, HighlightColor.SYM_PARAMETER)
+//        }
     }
 
     override fun visitMacroCall(o: SwarmMacroCall) {

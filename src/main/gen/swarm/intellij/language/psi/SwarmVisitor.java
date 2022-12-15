@@ -35,15 +35,7 @@ public class SwarmVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitDefParameters(@NotNull SwarmDefParameters o) {
-    visitPsiElement(o);
-  }
-
   public void visitDefinePair(@NotNull SwarmDefinePair o) {
-    visitPsiElement(o);
-  }
-
-  public void visitDefineStatement(@NotNull SwarmDefineStatement o) {
     visitPsiElement(o);
   }
 

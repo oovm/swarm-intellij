@@ -35,6 +35,12 @@ public class SwarmCmdValueNode extends ASTWrapperPsiElement implements SwarmCmdV
 
   @Override
   @Nullable
+  public SwarmFunctionCall getFunctionCall() {
+    return findChildByClass(SwarmFunctionCall.class);
+  }
+
+  @Override
+  @Nullable
   public SwarmNumberSuffix getNumberSuffix() {
     return findChildByClass(SwarmNumberSuffix.class);
   }

@@ -161,7 +161,7 @@ public class SwarmParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // BOOLEAN | num | string_literal | cmd_block
+  // BOOLEAN | num | string_literal | cmd_block | function_call
   public static boolean cmd_value(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "cmd_value")) return false;
     boolean r;
@@ -170,6 +170,7 @@ public class SwarmParser implements PsiParser, LightPsiParser {
     if (!r) r = num(b, l + 1);
     if (!r) r = string_literal(b, l + 1);
     if (!r) r = cmd_block(b, l + 1);
+    if (!r) r = function_call(b, l + 1);
     exit_section_(b, l, m, r, false, null);
     return r;
   }
@@ -183,68 +184,6 @@ public class SwarmParser implements PsiParser, LightPsiParser {
     if (!r) r = consumeToken(b, COMMENT_BLOCK);
     if (!r) r = consumeToken(b, COMMENT_DOC);
     return r;
-  }
-
-  /* ********************************************************** */
-  // PARENTHESIS_L [define_pair (COMMA define_pair)* COMMA?] PARENTHESIS_R
-  public static boolean def_parameters(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "def_parameters")) return false;
-    if (!nextTokenIs(b, PARENTHESIS_L)) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = consumeToken(b, PARENTHESIS_L);
-    r = r && def_parameters_1(b, l + 1);
-    r = r && consumeToken(b, PARENTHESIS_R);
-    exit_section_(b, m, DEF_PARAMETERS, r);
-    return r;
-  }
-
-  // [define_pair (COMMA define_pair)* COMMA?]
-  private static boolean def_parameters_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "def_parameters_1")) return false;
-    def_parameters_1_0(b, l + 1);
-    return true;
-  }
-
-  // define_pair (COMMA define_pair)* COMMA?
-  private static boolean def_parameters_1_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "def_parameters_1_0")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = define_pair(b, l + 1);
-    r = r && def_parameters_1_0_1(b, l + 1);
-    r = r && def_parameters_1_0_2(b, l + 1);
-    exit_section_(b, m, null, r);
-    return r;
-  }
-
-  // (COMMA define_pair)*
-  private static boolean def_parameters_1_0_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "def_parameters_1_0_1")) return false;
-    while (true) {
-      int c = current_position_(b);
-      if (!def_parameters_1_0_1_0(b, l + 1)) break;
-      if (!empty_element_parsed_guard_(b, "def_parameters_1_0_1", c)) break;
-    }
-    return true;
-  }
-
-  // COMMA define_pair
-  private static boolean def_parameters_1_0_1_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "def_parameters_1_0_1_0")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = consumeToken(b, COMMA);
-    r = r && define_pair(b, l + 1);
-    exit_section_(b, m, null, r);
-    return r;
-  }
-
-  // COMMA?
-  private static boolean def_parameters_1_0_2(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "def_parameters_1_0_2")) return false;
-    consumeToken(b, COMMA);
-    return true;
   }
 
   /* ********************************************************** */
@@ -295,23 +234,6 @@ public class SwarmParser implements PsiParser, LightPsiParser {
     r = r && expr(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
-  }
-
-  /* ********************************************************** */
-  // KW_DEFINE modifiers namespace def_parameters cmd_block
-  public static boolean define_statement(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "define_statement")) return false;
-    if (!nextTokenIs(b, KW_DEFINE)) return false;
-    boolean r, p;
-    Marker m = enter_section_(b, l, _NONE_, DEFINE_STATEMENT, null);
-    r = consumeToken(b, KW_DEFINE);
-    r = r && modifiers(b, l + 1);
-    r = r && namespace(b, l + 1);
-    p = r; // pin = namespace
-    r = r && report_error_(b, def_parameters(b, l + 1));
-    r = p && cmd_block(b, l + 1) && r;
-    exit_section_(b, l, m, r, p, null);
-    return r || p;
   }
 
   /* ********************************************************** */
@@ -1295,7 +1217,7 @@ public class SwarmParser implements PsiParser, LightPsiParser {
     r = namespace_statement(b, l + 1);
     if (!r) r = import_statement(b, l + 1);
     if (!r) r = task_statement(b, l + 1);
-    if (!r) r = define_statement(b, l + 1);
+    if (!r) r = consumeToken(b, DEFINE_STATEMENT);
     if (!r) r = macro_call(b, l + 1);
     if (!r) r = consumeToken(b, SEMICOLON);
     return r;

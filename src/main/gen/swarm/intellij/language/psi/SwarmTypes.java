@@ -15,9 +15,7 @@ public interface SwarmTypes {
   IElementType CMD_STATEMENT = new SwarmElementType("CMD_STATEMENT");
   IElementType CMD_VALUE = new SwarmElementType("CMD_VALUE");
   IElementType DEFINE_PAIR = new SwarmElementType("DEFINE_PAIR");
-  IElementType DEFINE_STATEMENT = new SwarmElementType("DEFINE_STATEMENT");
   IElementType DEFINE_TYPE = new SwarmElementType("DEFINE_TYPE");
-  IElementType DEF_PARAMETERS = new SwarmElementType("DEF_PARAMETERS");
   IElementType EXPR = new SwarmElementType("EXPR");
   IElementType FIELD_MARK = new SwarmElementType("FIELD_MARK");
   IElementType FIELD_RHS = new SwarmElementType("FIELD_RHS");
@@ -77,6 +75,7 @@ public interface SwarmTypes {
   IElementType COMMENT_DOC = new SwarmElementType("COMMENT_DOC");
   IElementType COMMENT_LINE = new SwarmElementType("COMMENT_LINE");
   IElementType DECIMAL = new SwarmElementType("DECIMAL");
+  IElementType DEFINE_STATEMENT = new SwarmElementType("define_statement");
   IElementType DOLLAR = new SwarmElementType("$");
   IElementType DOT = new SwarmElementType(".");
   IElementType DOUBLE_COLON = new SwarmElementType("DOUBLE_COLON");
@@ -87,7 +86,6 @@ public interface SwarmTypes {
   IElementType HASH = new SwarmElementType("HASH");
   IElementType HYPHEN = new SwarmElementType("-");
   IElementType INTEGER = new SwarmElementType("INTEGER");
-  IElementType KW_DEFINE = new SwarmElementType("KW_DEFINE");
   IElementType KW_IMPORT = new SwarmElementType("KW_IMPORT");
   IElementType KW_INPUT = new SwarmElementType("KW_INPUT");
   IElementType KW_NAMESPACE = new SwarmElementType("KW_NAMESPACE");
@@ -134,14 +132,8 @@ public interface SwarmTypes {
       else if (type == DEFINE_PAIR) {
         return new SwarmDefinePairNode(node);
       }
-      else if (type == DEFINE_STATEMENT) {
-        return new SwarmDefineStatementNode(node);
-      }
       else if (type == DEFINE_TYPE) {
         return new SwarmDefineTypeNode(node);
-      }
-      else if (type == DEF_PARAMETERS) {
-        return new SwarmDefParametersNode(node);
       }
       else if (type == EXPR) {
         return new SwarmExprNode(node);

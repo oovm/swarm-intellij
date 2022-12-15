@@ -104,7 +104,7 @@ cmd_statement ::=
     | COMMA
     ;
 cmd_pair   ::= namespace [COLON] cmd_value;
-cmd_value  ::= BOOLEAN | num | string_literal | cmd_block;
+cmd_value  ::= BOOLEAN | num | string_literal | cmd_block | function_call;
 // ---------------------------------------------------------------------------------------------------------------------
 // @function("path")
 function_call ::= namespace function_args [cmd_block];
