@@ -48,7 +48,7 @@ public class SwarmParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // PARENTHESIS_L [CHOOSE] expr PARENTHESIS_R | field_mark | function_call | value
+  // PARENTHESIS_L expr PARENTHESIS_R | field_mark | function_call | value
   public static boolean atom(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "atom")) return false;
     boolean r;
@@ -61,24 +61,16 @@ public class SwarmParser implements PsiParser, LightPsiParser {
     return r;
   }
 
-  // PARENTHESIS_L [CHOOSE] expr PARENTHESIS_R
+  // PARENTHESIS_L expr PARENTHESIS_R
   private static boolean atom_0(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "atom_0")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = consumeToken(b, PARENTHESIS_L);
-    r = r && atom_0_1(b, l + 1);
     r = r && expr(b, l + 1);
     r = r && consumeToken(b, PARENTHESIS_R);
     exit_section_(b, m, null, r);
     return r;
-  }
-
-  // [CHOOSE]
-  private static boolean atom_0_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "atom_0_1")) return false;
-    consumeToken(b, CHOOSE);
-    return true;
   }
 
   /* ********************************************************** */
@@ -490,12 +482,13 @@ public class SwarmParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // fn_pair
+  // fn_pair|COMMA
   public static boolean fn_statement(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "fn_statement")) return false;
     boolean r;
     Marker m = enter_section_(b, l, _NONE_, FN_STATEMENT, "<fn statement>");
     r = fn_pair(b, l + 1);
+    if (!r) r = consumeToken(b, COMMA);
     exit_section_(b, l, m, r, false, null);
     return r;
   }

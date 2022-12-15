@@ -101,7 +101,6 @@ KW_TASK      = task|pipeline
 <YYINITIAL> {
 	// literal
 	{BOOLEAN}     { return BOOLEAN; }
-	{SYMBOL}      { return SYMBOL; }
 	{BYTE}        { return BYTE; }
 	{INTEGER}     { return INTEGER; }
 	{DECIMAL}     { return DECIMAL; }
@@ -111,7 +110,31 @@ KW_TASK      = task|pipeline
 <YYINITIAL> {
 	\' {yybegin(StringSQ);return STRING_SQ;}
 	\" {yybegin(StringDQ);return STRING_DQ;}
-	@{SYMBOL} {yybegin(StringRL);return SYMBOL;}
+	{SYMBOL} {
+        int ptr = zzMarkedPos;
+        while (ptr < zzEndRead) {
+            char c = zzBuffer.charAt(ptr);
+            ptr++;
+            if (Character.isWhitespace(c)) {
+                continue;
+            }
+            switch (c) {
+                case '(':
+                case ')':
+                case '{':
+                case ':':
+                case '[':
+                case '<':
+                case '=':
+                case '.':
+                case ',':
+                    break;
+                default:
+                    yybegin(StringRL);
+            }
+            return SYMBOL;
+        }
+	}
 }
 <StringSQ, StringDQ, YYINITIAL> {ESCAPE_SPECIAL} {
 	return ESCAPE_SPECIAL;

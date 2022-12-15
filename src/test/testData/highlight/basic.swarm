@@ -1,4 +1,4 @@
-namespace rust;
+namespace rust
 
 
 def cargo-run() {
@@ -12,42 +12,51 @@ def cargo-test() {
 
 
 def maven() {
-    system "windows"
+    system windows
     shell {
-        location "usr/"
+        location usr/
     }
 }
 
 
-def jdk(key: Secret = "abc") {
-    a = 2a
+def jdk(key: Secret = "abc", slot: Slot) {
+    input {
+        key(1, "abc")
+    }
     steps {
-        @cargo run --test
-        cargo-run: "test"
+        cargo run --test
+        cargo-run("test")
         cargo(
             workspace: "a"
+            nice: "a"
         )
-        @cd name/a/b
-        @info Hello, JDK
-        @run java -version -k ${key}
+        cd name/a/b
+        info Hello, JDK
+        run java -version -k ${key}
+        set(3) {
+            cargo run --release
+        }
         retry(3) {
             timeout(10s) {
-                @print Retry 3 times, each time to complete within 10s
+                a.sleep(100ms)
+                print Retry 3 times, each time to complete within 10s
                 a = 2
             }
         }
         timeout(10s) {
             retry(3) {
-                @print Retry 3 times, complete within 10 seconds
+                print Retry 3 times, complete within 10 seconds
             }
         }
+        slot(2)
     }
-    then {
+    success {
 
     }
 }
 
 // g
 task Task {
+
     steps {}
 }

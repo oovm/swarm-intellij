@@ -109,13 +109,13 @@ cmd_value  ::= BOOLEAN | num | string_literal | cmd_block;
 // @function("path")
 function_call ::= identifier function_args [cmd_block];
 function_args ::= PARENTHESIS_L fn_statement* PARENTHESIS_R;
-fn_statement  ::= fn_pair;
+fn_statement  ::= fn_pair|COMMA;
 fn_pair   ::= [key (EQ|COLON)] cmd_value;
 
 
 expr ::= term (infix term | term)*;
 term ::= (prefix)* atom (suffix)*
-atom ::= PARENTHESIS_L [CHOOSE] expr PARENTHESIS_R | field_mark | function_call | value;
+atom ::= PARENTHESIS_L expr PARENTHESIS_R | field_mark | function_call | value;
 // =====================================================================================================================
 macro_call  ::= HASH identifier;
 // =====================================================================================================================

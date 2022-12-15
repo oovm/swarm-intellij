@@ -7,7 +7,7 @@ import com.intellij.psi.PsiElement;
 
 public interface SwarmFnStatement extends PsiElement {
 
-  @NotNull
+  @Nullable
   SwarmFnPair getFnPair();
 
 }

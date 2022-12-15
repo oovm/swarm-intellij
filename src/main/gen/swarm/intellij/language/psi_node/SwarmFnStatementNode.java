@@ -28,9 +28,9 @@ public class SwarmFnStatementNode extends ASTWrapperPsiElement implements SwarmF
   }
 
   @Override
-  @NotNull
+  @Nullable
   public SwarmFnPair getFnPair() {
-    return findNotNullChildByClass(SwarmFnPair.class);
+    return findChildByClass(SwarmFnPair.class);
   }
 
 }
