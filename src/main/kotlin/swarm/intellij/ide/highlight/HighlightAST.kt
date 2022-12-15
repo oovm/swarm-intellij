@@ -48,6 +48,12 @@ class HighlightAST : SwarmVisitor(), HighlightVisitor {
         highlight(o.identifier, HighlightColor.SYM_MACRO)
     }
 
+    override fun visitCmdPair(o: SwarmCmdPair) {
+        highlight(o.namespace.lastChild, HighlightColor.SYM_FUNCTION)
+    }
+
+
+
     override fun visitFunctionCall(o: SwarmFunctionCall) {
         highlight(o.firstChild, HighlightColor.SYM_FUNCTION)
         highlight(o.identifier, HighlightColor.SYM_FUNCTION)

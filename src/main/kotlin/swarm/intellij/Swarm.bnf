@@ -87,7 +87,9 @@ define_statement ::= KW_DEFINE modifiers namespace def_parameters cmd_block {
     mixin = "swarm.intellij.language.mixin.MixinDefineStatement"
 };
 def_parameters   ::= PARENTHESIS_L [define_pair (COMMA define_pair)* COMMA?] PARENTHESIS_R;
-define_pair      ::= identifier [COLON define_type] [EQ expr];
+define_pair      ::= identifier [COLON define_type] [EQ expr] {
+    mixin = "swarm.intellij.language.mixin.MixinDefineParameter"
+}
 define_type      ::= identifier;
 // =====================================================================================================================
 cmd_block       ::= BRACE_L cmd_statement* BRACE_R {

@@ -20,8 +20,14 @@ open class MixinDefineStatement(node: ASTNode) : DeclareNode(node) {
     val parameterNodes: Array<SwarmIdentifierNode>
         get() {
             val list = mutableListOf<SwarmIdentifierNode>();
-            val names = mutableListOf<String>()
+            val names = mutableSetOf<String>()
+            if (originalElement.defParameters == null) return emptyArray()
 
+            for (param in originalElement.defParameters!!.definePairList) {
+                val name = param.identifier.text
+                names.add(name)
+                list.add(param.identifier as SwarmIdentifierNode)
+            }
             return list.toTypedArray()
         }
 }

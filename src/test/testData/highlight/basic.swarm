@@ -1,9 +1,14 @@
 namespace rust;
 
 
-def cargo.run() {
+def cargo-run() {
 
 }
+
+def cargo-test() {
+
+}
+
 
 
 def maven() {
@@ -15,11 +20,14 @@ def maven() {
 
 
 def jdk(key: Secret = "abc") {
+    a = 2a
     steps {
-        cargo-run: "a"
+        @cargo run --test
+        cargo-run: "test"
         cargo(
-            workspace = "a"
+            workspace: "a"
         )
+        @cd name/a/b
         @info Hello, JDK
         @run java -version -k ${key}
         retry(3) {
@@ -39,6 +47,7 @@ def jdk(key: Secret = "abc") {
     }
 }
 
-task a {
+// g
+task Task {
     steps {}
 }
