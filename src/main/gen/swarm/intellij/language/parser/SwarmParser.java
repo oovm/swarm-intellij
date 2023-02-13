@@ -775,79 +775,31 @@ public class SwarmParser implements PsiParser, LightPsiParser {
   }
 
   /* ********************************************************** */
-  // [SIGN] (INTEGER | DECIMAL) [number_suffix] | [SIGN] BYTE
+  // [SIGN] (INTEGER | NUMBER | BYTE)
   static boolean num(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "num")) return false;
     boolean r;
     Marker m = enter_section_(b);
     r = num_0(b, l + 1);
-    if (!r) r = num_1(b, l + 1);
-    exit_section_(b, m, null, r);
-    return r;
-  }
-
-  // [SIGN] (INTEGER | DECIMAL) [number_suffix]
-  private static boolean num_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "num_0")) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = num_0_0(b, l + 1);
-    r = r && num_0_1(b, l + 1);
-    r = r && num_0_2(b, l + 1);
+    r = r && num_1(b, l + 1);
     exit_section_(b, m, null, r);
     return r;
   }
 
   // [SIGN]
-  private static boolean num_0_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "num_0_0")) return false;
+  private static boolean num_0(PsiBuilder b, int l) {
+    if (!recursion_guard_(b, l, "num_0")) return false;
     consumeToken(b, SIGN);
     return true;
   }
 
-  // INTEGER | DECIMAL
-  private static boolean num_0_1(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "num_0_1")) return false;
-    boolean r;
-    r = consumeToken(b, INTEGER);
-    if (!r) r = consumeToken(b, DECIMAL);
-    return r;
-  }
-
-  // [number_suffix]
-  private static boolean num_0_2(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "num_0_2")) return false;
-    number_suffix(b, l + 1);
-    return true;
-  }
-
-  // [SIGN] BYTE
+  // INTEGER | NUMBER | BYTE
   private static boolean num_1(PsiBuilder b, int l) {
     if (!recursion_guard_(b, l, "num_1")) return false;
     boolean r;
-    Marker m = enter_section_(b);
-    r = num_1_0(b, l + 1);
-    r = r && consumeToken(b, BYTE);
-    exit_section_(b, m, null, r);
-    return r;
-  }
-
-  // [SIGN]
-  private static boolean num_1_0(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "num_1_0")) return false;
-    consumeToken(b, SIGN);
-    return true;
-  }
-
-  /* ********************************************************** */
-  // identifier
-  public static boolean number_suffix(PsiBuilder b, int l) {
-    if (!recursion_guard_(b, l, "number_suffix")) return false;
-    if (!nextTokenIs(b, SYMBOL)) return false;
-    boolean r;
-    Marker m = enter_section_(b);
-    r = identifier(b, l + 1);
-    exit_section_(b, m, NUMBER_SUFFIX, r);
+    r = consumeToken(b, INTEGER);
+    if (!r) r = consumeToken(b, NUMBER);
+    if (!r) r = consumeToken(b, BYTE);
     return r;
   }
 
@@ -1208,7 +1160,6 @@ public class SwarmParser implements PsiParser, LightPsiParser {
   // namespace_statement
   //     | import_statement
   //     | task_statement
-  //     | define_statement
   //     | macro_call
   //     | SEMICOLON
   static boolean statements(PsiBuilder b, int l) {
@@ -1217,7 +1168,6 @@ public class SwarmParser implements PsiParser, LightPsiParser {
     r = namespace_statement(b, l + 1);
     if (!r) r = import_statement(b, l + 1);
     if (!r) r = task_statement(b, l + 1);
-    if (!r) r = consumeToken(b, DEFINE_STATEMENT);
     if (!r) r = macro_call(b, l + 1);
     if (!r) r = consumeToken(b, SEMICOLON);
     return r;

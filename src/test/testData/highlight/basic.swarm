@@ -1,79 +1,30 @@
-namespace rust
+namespace test;
+using std;
+true;
+false;
+
+0;
+1.0;
+0usize;
+
+id;
+`rawid`;
+
+Any
+ASCII_BIN
 
 
-task cargo.install {
 
-}
+"string";
 
-task cargo-test {
+Any
+ASCII_BIN
+'char';
 
-}
 
-task maven {
-    system windows
-    shell {
-        location usr/
-    }
-}
+Any
+ASCII_BIN;
 
-// Prepare JDK
-//
-// ## JDK
-#parallel
-task jdk {
-    input {
-    key: String = ""
-    }
-    when {
-        branch production
-        environment {
-            name DEPLOY_TO
-            value production
-        }
-    }
-    steps("build") {
-        steps {
-
-        }
-        cargo run --debug
-        cargo-run("test")
-        a: dedent("
-
-        ")
-        cargo(
-            workspace: "a"
-            nice: "a"
-        )
-        cd name/a/b
-        info Hello, JDK
-        run java -version -k ${key}
-        set(3) {
-            cargo run --release
-        }
-        retry(3) {
-            timeout(10s) {
-                sleep(100ms)
-                print Retry 3 times, each time to complete within 10s
-
-            }
-        }
-        timeout(10s) {
-            retry(3) {
-                print Retry 3 times, complete within 10 seconds
-            }
-        }
-        slot(2)
-    }
-    steps {
-
-    }
-    success {
-
-    }
-}
-
-// g
-task Task {
-
-    steps {}
-}
+< >
+    {this.age}
+</>

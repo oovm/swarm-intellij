@@ -41,12 +41,6 @@ public class SwarmValueNode extends ASTWrapperPsiElement implements SwarmValue {
 
   @Override
   @Nullable
-  public SwarmNumberSuffix getNumberSuffix() {
-    return findChildByClass(SwarmNumberSuffix.class);
-  }
-
-  @Override
-  @Nullable
   public SwarmStringLiteral getStringLiteral() {
     return findChildByClass(SwarmStringLiteral.class);
   }

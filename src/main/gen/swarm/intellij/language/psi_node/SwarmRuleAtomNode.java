@@ -53,12 +53,6 @@ public class SwarmRuleAtomNode extends ASTWrapperPsiElement implements SwarmRule
 
   @Override
   @Nullable
-  public SwarmNumberSuffix getNumberSuffix() {
-    return findChildByClass(SwarmNumberSuffix.class);
-  }
-
-  @Override
-  @Nullable
   public SwarmRuleExpr getRuleExpr() {
     return findChildByClass(SwarmRuleExpr.class);
   }

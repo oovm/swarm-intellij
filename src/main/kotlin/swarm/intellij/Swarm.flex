@@ -61,7 +61,6 @@ KW_INPUT	 = input
 <YYINITIAL> {
 	{KW_NAMESPACE} { return KW_NAMESPACE; }
 	{KW_TASK}      { return KW_TASK; }
-	{KW_DEFINE}    { return KW_DEFINE; }
 	{KW_IMPORT}    { return KW_IMPORT; }
     {KW_INPUT}     { return KW_INPUT; }
 }
@@ -104,7 +103,6 @@ KW_INPUT	 = input
 	{BOOLEAN}     { return BOOLEAN; }
 	{BYTE}        { return BYTE; }
 	{INTEGER}     { return INTEGER; }
-	{DECIMAL}     { return DECIMAL; }
 	{SIGN}        { return SIGN; }
 }
 // String Mode =========================================================================================================
@@ -127,6 +125,9 @@ KW_INPUT	 = input
 	        return SYMBOL;
 	    }
 	    return SYMBOL;
+	}
+	({INTEGER}|{DECIMAL}){SYMBOL}? {
+		return NUMBER;
 	}
 }
 <StringSQ, StringDQ, YYINITIAL> {ESCAPE_SPECIAL} {

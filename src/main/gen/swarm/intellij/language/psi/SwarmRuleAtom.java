@@ -20,9 +20,6 @@ public interface SwarmRuleAtom extends PsiElement {
   SwarmNamespace getNamespace();
 
   @Nullable
-  SwarmNumberSuffix getNumberSuffix();
-
-  @Nullable
   SwarmRuleExpr getRuleExpr();
 
   @Nullable

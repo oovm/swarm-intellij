@@ -14,9 +14,6 @@ public interface SwarmCmdValue extends PsiElement {
   SwarmFunctionCall getFunctionCall();
 
   @Nullable
-  SwarmNumberSuffix getNumberSuffix();
-
-  @Nullable
   SwarmStringLiteral getStringLiteral();
 
 }

@@ -40,7 +40,7 @@ class HighlightToken : SyntaxHighlighterBase() {
             STRING_LITERAL, STRING_SQ, STRING_DQ, CHARACTER -> Color.STRING
             ESCAPE_SPECIAL, ESCAPE_UNICODE -> Color.STRING_ESCAPE
             INTEGER -> Color.INTEGER
-            DECIMAL -> Color.DECIMAL
+            NUMBER -> Color.DECIMAL
 
             SYMBOL -> Color.IDENTIFIER
             // 注释

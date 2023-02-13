@@ -119,10 +119,6 @@ public class SwarmVisitor extends PsiElementVisitor {
     visitPsiElement(o);
   }
 
-  public void visitNumberSuffix(@NotNull SwarmNumberSuffix o) {
-    visitPsiElement(o);
-  }
-
   public void visitObject(@NotNull SwarmObject o) {
     visitPsiElement(o);
   }

@@ -14,9 +14,6 @@ public interface SwarmValue extends PsiElement {
   SwarmNamespace getNamespace();
 
   @Nullable
-  SwarmNumberSuffix getNumberSuffix();
-
-  @Nullable
   SwarmStringLiteral getStringLiteral();
 
   @Nullable

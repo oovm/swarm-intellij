@@ -35,7 +35,6 @@ public interface SwarmTypes {
   IElementType MODIFIERS = new SwarmElementType("MODIFIERS");
   IElementType NAMESPACE = new SwarmElementType("NAMESPACE");
   IElementType NAMESPACE_STATEMENT = new SwarmElementType("NAMESPACE_STATEMENT");
-  IElementType NUMBER_SUFFIX = new SwarmElementType("NUMBER_SUFFIX");
   IElementType OBJECT = new SwarmElementType("OBJECT");
   IElementType OBJECT_ITEM = new SwarmElementType("OBJECT_ITEM");
   IElementType OBJECT_KEY = new SwarmElementType("OBJECT_KEY");
@@ -74,8 +73,6 @@ public interface SwarmTypes {
   IElementType COMMENT_BLOCK = new SwarmElementType("COMMENT_BLOCK");
   IElementType COMMENT_DOC = new SwarmElementType("COMMENT_DOC");
   IElementType COMMENT_LINE = new SwarmElementType("COMMENT_LINE");
-  IElementType DECIMAL = new SwarmElementType("DECIMAL");
-  IElementType DEFINE_STATEMENT = new SwarmElementType("define_statement");
   IElementType DOLLAR = new SwarmElementType("$");
   IElementType DOT = new SwarmElementType(".");
   IElementType DOUBLE_COLON = new SwarmElementType("DOUBLE_COLON");
@@ -93,6 +90,7 @@ public interface SwarmTypes {
   IElementType MANY = new SwarmElementType("*");
   IElementType MANY1 = new SwarmElementType("+");
   IElementType NOT = new SwarmElementType("!");
+  IElementType NUMBER = new SwarmElementType("NUMBER");
   IElementType OPTIONAL = new SwarmElementType("?");
   IElementType PARENTHESIS_L = new SwarmElementType("(");
   IElementType PARENTHESIS_R = new SwarmElementType(")");
@@ -191,9 +189,6 @@ public interface SwarmTypes {
       }
       else if (type == NAMESPACE_STATEMENT) {
         return new SwarmNamespaceStatementNode(node);
-      }
-      else if (type == NUMBER_SUFFIX) {
-        return new SwarmNumberSuffixNode(node);
       }
       else if (type == OBJECT) {
         return new SwarmObjectNode(node);

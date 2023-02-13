@@ -59,7 +59,6 @@ private statements ::=
       namespace_statement
     | import_statement
     | task_statement
-    | define_statement
     | macro_call
     | SEMICOLON;
 // ---------------------------------------------------------------------------------------------------------------------
@@ -134,7 +133,6 @@ field_rhs  ::= identifier | charset | string_literal;
 // ---------------------------------------------------------------------------------------------------------------------
 value ::= BOOLEAN | num | string_literal | table | namespace | charset;
 type_hint ::= identifier;
-number_suffix ::= identifier;
 charset ::= REGEX_RANGE;
 // ---------------------------------------------------------------------------------------------------------------------
 pair ::= symbol_path eq value;
@@ -143,7 +141,7 @@ key ::= string_literal | key_symbol | INTEGER;
 private eq ::= EQ | COLON;
 key_symbol ::= SYMBOL;
 // ---------------------------------------------------------------------------------------------------------------------
-private num ::= [SIGN] (INTEGER | DECIMAL) [number_suffix] | [SIGN] BYTE;
+private num ::= [SIGN] (INTEGER | NUMBER | BYTE);
 // ---------------------------------------------------------------------------------------------------------------------
 string_literal ::= esc | STRING_SQ char* STRING_SQ | STRING_DQ char* STRING_DQ | char+;
 private char ::= CHARACTER | esc;
